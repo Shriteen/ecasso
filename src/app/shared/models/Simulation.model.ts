@@ -33,6 +33,9 @@ export default class Simulation {
   constructor(states : State[],defaultState: string,rules: TransitionFromRule, options: SimulationParams) {
     this.states= new Map();
     for(const s of states){
+      if(!s.name || !s.color)
+	throw new Error("Incomplete state! "+JSON.stringify(s));
+      
       if(!this.states.has(s.name))
 	this.states.set(s.name, s);
       else
@@ -210,10 +213,41 @@ export default class Simulation {
     });
   }
 
-  setRules(rules: TransitionFromRule){
-    //Will throw exception if invalid
-    this.validateRules(rules);
-    this.rules= rules;
+  setRules(rules: TransitionFromRule, states?: State[], defaultState?: string){
+    const backupStateMap= this.states;
+    const backupDefaultState= this.defaultState;
+
+    try{
+      if(states){		// If states are provided
+	this.states= new Map();
+	for(const s of states){
+	  if(!s.name || !s.color)
+	    throw new Error("Incomplete state! "+JSON.stringify(s));
+
+	  if(!this.states.has(s.name))
+	    this.states.set(s.name, s);
+	  else
+	    throw new Error("Duplicate state name!");
+	}
+
+	if(defaultState){	// If default state is provided
+	  if(this.states.has(defaultState))
+	    this.defaultState=defaultState;
+	  else
+	    throw new Error("Unknown state set as default!");
+	}
+      }
+      
+      //Will throw exception if invalid
+      this.validateRules(rules);
+      this.rules= rules;
+      
+    }catch(e: any){
+      //Restore backup and rethrow
+      this.states=backupStateMap;
+      this.defaultState=backupDefaultState;
+      throw e;
+    }
   }
 
 }

@@ -1,5 +1,21 @@
 <div class="editor">
   <div class="editing-area">
+    <div class="states">
+      @for(state of this.states; track state._id; let i = $index){
+      <button [class]="i==selectedStateIndex?'active':'inactive'"
+              (click)="this.selectState(i)">{{state.name}}</button>
+      }
+      <button class="add-button" (click)="this.addState()">Add +</button>
+    </div>
+    @if (selectedStateIndex!=null?this.states[selectedStateIndex]:null; as state){
+      <div class="state-details">
+        <label>Name: <input type="text" [(ngModel)]="state.name"></label>
+        <label>Color: <input type="color" [(ngModel)]="state.color"></label>
+        <label>Background state: {{state._id==this.defaultStateId?"Yes":"No"}}</label>
+        <button (click)="this.defaultStateId=state._id">Set as Background</button>
+        <button (click)="this.deleteState(state._id)">Delete</button>
+      </div>
+    }
     <textarea #config rows="40" cols="80"></textarea>
     @if(this.errorMode=="fail"){
       <div class="errors">{{this.errorMessage}}</div>

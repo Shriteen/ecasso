@@ -12,3 +12,7 @@
 .success{
     background-color: rgba(90, 255, 90, 0.3);
 }
+
+.states .active{
+    background-color: #aaa;
+}
