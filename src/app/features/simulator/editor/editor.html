@@ -1,0 +1,13 @@
+<div class="editor">
+  <div class="editing-area">
+    <textarea #config rows="40" cols="80"></textarea>
+    @if(this.errorMode=="fail"){
+      <div class="errors">{{this.errorMessage}}</div>
+    }@else if(this.errorMode=="success"){
+      <div class="success">Rules Updated Successfully!</div>        
+    }
+  </div>
+  <div class="button-bar">
+    <button class="compile-btn" (click)="this.compileFromText(config.value)">Compile</button>
+  </div>
+</div>

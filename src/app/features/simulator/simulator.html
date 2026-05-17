@@ -1,0 +1,13 @@
+<div class="simulator">
+  <div class="top-bar">
+    Top bar
+  </div>
+
+  <div class="main-view">
+    <editor [simulationState]="this.simulation" />
+    <viewer [simulationState]="this.simulation"
+            [width]="this.options.cellSize*this.options.matrixWidth"
+            [height]="this.options.cellSize*this.options.matrixHeight"
+            />
+  </div>
+</div>

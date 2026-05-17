@@ -1,0 +1,12 @@
+.simulator{
+    display: grid;
+    grid-template-rows: 2.5em 1fr;
+    height: 100vh;
+}
+.main-view{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.top-bar{
+    border-bottom: 1px solid #555;
+}

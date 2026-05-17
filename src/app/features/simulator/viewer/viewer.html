@@ -1,0 +1,14 @@
+<div class="viewer">
+  <div class="preview-area">
+    <canvas #canvas class="canvas" [width]="this.width()" [height]="this.height()"></canvas>
+  </div>
+  <div class="button-bar">
+    @if(this.playState=="running"){
+      <button class="pause-btn" (click)="this.pause()">Pause</button>
+    }@else{    
+      <button class="play-btn" (click)="this.play()">Play</button>
+    }
+    <button class="step-btn" (click)="this.step()">Step</button>
+    <button class="reset-btn" (click)="this.reset()">Reset</button>
+  </div>
+</div>

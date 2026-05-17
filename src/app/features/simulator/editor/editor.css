@@ -1,0 +1,14 @@
+.editor{
+    display: grid;
+    grid-template-rows: 1fr 2.5em;
+    height: 100%;
+    border-right: 2px solid #555;
+}
+
+.errors{
+    background-color: rgba(255, 90, 90, 0.3);
+}
+
+.success{
+    background-color: rgba(90, 255, 90, 0.3);
+}
