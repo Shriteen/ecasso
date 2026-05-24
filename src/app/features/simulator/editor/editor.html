@@ -5,25 +5,34 @@
       <button [class]="i==selectedStateIndex?'active':'inactive'"
               (click)="this.selectState(i)">{{state.name}}</button>
       }
-      <button class="add-button" (click)="this.addState()">Add +</button>
+      <button class="add-state-button" (click)="this.addState()">Add +</button>
     </div>
     @if (selectedStateIndex!=null?this.states[selectedStateIndex]:null; as state){
-      <div class="state-details">
-        <label>Name: <input type="text" [(ngModel)]="state.name"></label>
-        <label>Color: <input type="color" [(ngModel)]="state.color"></label>
-        <label>Background state: {{state._id==this.defaultStateId?"Yes":"No"}}</label>
-        <button (click)="this.defaultStateId=state._id">Set as Background</button>
-        <button (click)="this.deleteState(state._id)">Delete</button>
-      </div>
+    <div class="state-details">
+      <label>Name: <input type="text" [(ngModel)]="state.name"></label>
+      <label>Color: <input type="color" [(ngModel)]="state.color"></label>
+      <label>Background state: {{state._id==this.defaultStateId?"Yes":"No"}}</label>
+      <button (click)="this.defaultStateId=state._id">Set as Background</button>
+      <button (click)="this.deleteState(state._id)">Delete</button>
+    </div>
+    <div class="to-state">
+      @for(state of this.states[selectedStateIndex!].rules; track state._id; let i = $index){
+      <app-to-state-editor [toState]="state"
+                           [availableStates]="this.getAvailableToStates(selectedStateIndex)"
+                           (deleted)="this.deleteToStateRule($event)"/>
+      }
+      <button class="add-target-state-button" (click)="this.addToStateRule()">Add +</button>
+    </div>
     }
     <textarea #config rows="40" cols="80"></textarea>
     @if(this.errorMode=="fail"){
-      <div class="errors">{{this.errorMessage}}</div>
+    <div class="errors">{{this.errorMessage}}</div>
     }@else if(this.errorMode=="success"){
-      <div class="success">Rules Updated Successfully!</div>        
+    <div class="success">Rules Updated Successfully!</div>
     }
   </div>
   <div class="button-bar">
-    <button class="compile-btn" (click)="this.compileFromText(config.value)">Compile</button>
+    <button class="compile-text-btn" (click)="this.compileFromText(config.value)">Compile from Text</button>
+    <button class="compile-btn" (click)="this.compileRules()">Compile</button>
   </div>
 </div>

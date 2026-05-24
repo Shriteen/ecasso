@@ -1,0 +1,10 @@
+<div class="to-state-container">
+  <select class="to-state-options" [(ngModel)]="this.toState().to">
+      <option [value]="this.toState().to">{{this.toState().to}}</option>
+    @for(state of this.availableStates(); track state._id){
+      <option [value]="state.name">{{state.name}}</option>
+    }
+  </select>
+  <button class="to-state-delete-button" (click)="this.delete()">Delete</button>
+  <pre>{{toState()|json}}</pre>
+</div>

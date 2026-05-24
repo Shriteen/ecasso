@@ -1,25 +1,28 @@
 import { ChangeDetectorRef, Component, EventEmitter, input, OnInit, Output } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import Simulation from "@shared/models/Simulation.model";
-import { TransitionFromRule, State } from "@shared/types";
+import { TransitionFromRule, TransitionToRule, State } from "@shared/types";
 import { FormsModule } from "@angular/forms";
-
-type ItemWithId<T> = Partial<T> & { _id: string };
+import { convertToStates, simulationToStateUIarray, StateUI, stateUIarrayToTransitionFromRules } from "./ui-adapter";
+import { JsonPipe } from "@angular/common";
+import { ToStateEditor } from "./to-state-editor/to-state-editor";
 
 @Component({
   selector: "editor",
-  imports: [FormsModule],
+  imports: [FormsModule, JsonPipe, ToStateEditor],
   templateUrl: "./editor.html",
   styleUrl: "./editor.css",
 })
 export class Editor implements OnInit {
   simulationState = input.required<Simulation>();
 
-  states: ItemWithId<State>[]=[];
+  states: StateUI[]=[];
   defaultStateId: string|null=null;
 
   selectedStateIndex: number|null=null;
 
+  
+  
   errorMode: "neutral"|"success"|"fail" = "neutral";
   errorMessage: string|null = null;
 
@@ -27,8 +30,8 @@ export class Editor implements OnInit {
   }
 
   ngOnInit(): void {
-    this.states = Array.from(this.simulationState().states.values())
-                       .map(x=>{return {_id: uuidv4(),...x}});
+    this.states = simulationToStateUIarray(this.simulationState());
+
     const filtered = this.states.find(x=>x.name==this.simulationState().defaultState);
     if(filtered)         // Should always be true, this condition is to satisfy TS
       this.defaultStateId=filtered._id;
@@ -48,15 +51,20 @@ export class Editor implements OnInit {
     }
   }
 
+  compileRules(){
+    try{
+      const rules = stateUIarrayToTransitionFromRules(this.states);
+      this.compile(rules);
+    }catch(e: any){
+      this.errorMode="fail";
+      this.errorMessage=e.message;
+    }
+  }
+
   compile(rules: TransitionFromRule){
     try{
-      const tempStates=[]
-      for(const state of this.states){
-        if(!state.name || !state.color)
-          throw new Error("Incomplete state! "+ JSON.stringify(state));
+      const tempStates : State[]= convertToStates(this.states);
 
-        tempStates.push({name:state.name, color: state.color});
-      }
       let defaultState:string|undefined;
       if(this.defaultStateId==null){
         throw new Error("One of the states should be set as background!")
@@ -82,7 +90,7 @@ export class Editor implements OnInit {
   }
   
   addState(){    
-    this.states.push({_id: uuidv4(), color: "#000000"});
+    this.states.push({_id: uuidv4(), color: "#000000", rules: []});
     this.selectedStateIndex= this.states.length-1;
   }
 
@@ -99,5 +107,38 @@ export class Editor implements OnInit {
     else
       this.selectedStateIndex=null;
   }
+
+  addToStateRule(){
+    //Need to add under currently selected
+    if(this.selectedStateIndex!=null){
+      this.states[this.selectedStateIndex].rules.push({
+        _id: uuidv4(),
+        to: "",
+        rule: { _id: uuidv4() }
+      });
+    }
+  }
   
+  deleteToStateRule(id: string){
+    if(this.selectedStateIndex!=null){
+      const selectedToState= this.states[this.selectedStateIndex];
+      selectedToState.rules= selectedToState.rules.filter(s=>s._id!=id);
+    }
+  }
+
+  //Get states which are options as target states
+  getAvailableToStates(fromStateIndex: number|null): StateUI[]{
+    //Set(all states) - Set(already taken states for fromState)
+    if(fromStateIndex!=null){
+      const takenStateNames:string[]= this.states[fromStateIndex].rules.map(s=>s.to);
+      const availableStates= this.states.filter(
+        state=>state.name!=undefined && state.name!=null && state.name!=""
+      ).filter(
+        state=> !takenStateNames.includes(state.name!)
+      );
+
+      return availableStates;
+    }
+    return [];
+  }
 }
