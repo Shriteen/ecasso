@@ -1,8 +1,12 @@
 .editor{
     display: grid;
     grid-template-rows: 1fr 2.5em;
-    height: 100%;
+    height: calc(100vh - 2.5em); /*2.5em is from top bar*/
     border-right: 2px solid #555;
+}
+
+.editing-area{
+    overflow: scroll;
 }
 
 .errors{
@@ -15,4 +19,37 @@
 
 .states .active{
     background-color: #aaa;
+}
+
+.states{
+    display: flex;
+    height: 5rem
+}
+.states-list{
+    display: flex;
+    overflow-x: auto;
+}
+.states button{
+    flex: 0 0 auto;
+    min-width: 5rem;
+}
+
+.state-details{
+    display: flex;
+    margin: 1rem;
+}
+.state-details>div{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.state-details-bg button{
+    width: min-content;
+}
+
+.to-state{
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+    gap: 1em;
 }

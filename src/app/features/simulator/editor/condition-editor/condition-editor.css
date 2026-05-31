@@ -1,5 +1,27 @@
 .condition{
     display: flex;
+    margin-bottom: 0.5em;
+    background-color: rgba(0,0,0,0.03);
+}
+
+.children{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.details{
+    width: 100%;
+}
+.condition-detail-header{
+    display: flex;
+    margin: 0.5em;
+}
+.condition-statement{
+    margin: 0.5em;    
+}
+.condition-options{
+    margin-right: auto;
 }
 
 .count-in-list-options{

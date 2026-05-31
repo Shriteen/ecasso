@@ -1,6 +1,10 @@
 <div class="viewer">
-  <div class="preview-area">
-    <canvas #canvas class="canvas" [width]="this.width()" [height]="this.height()"></canvas>
+  <div class="preview-area" (wheel)="onWheel($event)">
+    <canvas #canvas
+            class="canvas"
+            [width]="this.width()"
+            [height]="this.height()"
+            [style.zoom]="this.zoom"></canvas>
   </div>
   <div class="button-bar">
     @if(this.playState=="running"){
@@ -10,5 +14,8 @@
     }
     <button class="step-btn" (click)="this.step()">Step</button>
     <button class="reset-btn" (click)="this.reset()">Reset</button>
+    <button class="zoom-in-btn" (click)="this.zoomIn(1.25)">Zoom +</button>
+    <button class="zoom-reset-btn" (click)="this.zoomReset()">{{(this.zoom*100).toFixed(2)}}%</button>
+    <button class="zoom-out-btn" (click)="this.zoomOut(0.8)">Zoom -</button>
   </div>
 </div>

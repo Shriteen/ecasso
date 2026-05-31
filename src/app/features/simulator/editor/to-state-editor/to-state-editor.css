@@ -1,3 +1,14 @@
+.to-state-container{
+    border: 1px solid;
+    padding: 0.5em;
+}
+.to-state-details{
+    display: flex;
+}
+.to-state-delete-button{
+    margin-left: auto;
+}
+
 .ng-invalid{
     border: 2px solid red;
 }

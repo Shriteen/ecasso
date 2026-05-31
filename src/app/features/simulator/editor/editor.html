@@ -1,18 +1,24 @@
 <div class="editor">
   <div class="editing-area">
     <div class="states">
+      <div class="states-list">
       @for(state of this.states; track state._id; let i = $index){
       <button [class]="i==selectedStateIndex?'active':'inactive'"
               (click)="this.selectState(i)">{{state.name}}</button>
       }
+      </div>
       <button class="add-state-button" (click)="this.addState()">Add +</button>
     </div>
     @if (selectedStateIndex!=null?this.states[selectedStateIndex]:null; as state){
     <div class="state-details">
-      <label>Name: <input type="text" [(ngModel)]="state.name"></label>
-      <label>Color: <input type="color" [(ngModel)]="state.color"></label>
-      <label>Background state: {{state._id==this.defaultStateId?"Yes":"No"}}</label>
-      <button (click)="this.defaultStateId=state._id">Set as Background</button>
+      <div class="state-details-basic">
+        <label>Name: <input type="text" [(ngModel)]="state.name"></label>
+        <label>Color: <input type="color" [(ngModel)]="state.color"></label>
+      </div>
+      <div class="state-details-bg">
+        <label>Background state: {{state._id==this.defaultStateId?"Yes":"No"}}</label>
+        <button (click)="this.defaultStateId=state._id">Set as Background</button>
+      </div>
       <button (click)="this.deleteState(state._id)">Delete</button>
     </div>
     <div class="to-state">

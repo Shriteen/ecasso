@@ -1,22 +1,24 @@
 <div class="condition">
   <div class="indent" [style.width.px]="this.indent"></div>
   <div class="details">
-    <select class="condition-options"
-            required
-            [(ngModel)]="this.rule().condition"
-            (ngModelChange)="onConditionChange($event)">
-      @for(c of this.CONDITION_LABELS | keyvalue; track $index){
-        <option [value]="c.key">{{c.value}}</option>
+    <div class="condition-detail-header">
+      <select class="condition-options"
+              required
+              [(ngModel)]="this.rule().condition"
+              (ngModelChange)="onConditionChange($event)">
+        @for(c of this.CONDITION_LABELS | keyvalue; track $index){
+          <option [value]="c.key">{{c.value}}</option>
+        }
+      </select>
+      @if(this.rule().condition=="AND" || this.rule().condition=="OR"){
+        <button class="add-child-condition-button" (click)="this.addChildCondtion()">+ condtions</button>
       }
-    </select>
-    @if(this.rule().condition=="AND" || this.rule().condition=="OR"){
-      <button class="add-child-condition-button" (click)="this.addChildCondtion()">+ condtions</button>
-    }
 
-    @if(this.level()>0){
-      <button class="delete-condition-button" (click)="this.deleteCondtion()">Delete</button>
-    }
-
+      @if(this.level()>0){
+        <button class="delete-condition-button" (click)="this.deleteCondtion()">Delete</button>
+      }
+    </div>
+      
     @if(["EQ","NEQ","LT","LTE","GT","GTE"].includes(this.rule().condition ?? "")){
       <div class="condition-statement">
         Count of
