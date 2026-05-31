@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, input, OnInit, Output } from "@angular/core";
+import { ChangeDetectorRef, Component, computed, EventEmitter, input, OnInit, Output, signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import Simulation from "@shared/models/Simulation.model";
 import { TransitionFromRule, TransitionToRule, State } from "@shared/types";
@@ -6,12 +6,20 @@ import { FormsModule } from "@angular/forms";
 import { convertToStates, simulationToStateUIarray, StateUI, stateUIarrayToTransitionFromRules } from "./ui-adapter";
 import { JsonPipe } from "@angular/common";
 import { ToStateEditor } from "./to-state-editor/to-state-editor";
+import { ALL_STATES } from "./editor.token";
 
 @Component({
   selector: "editor",
   imports: [FormsModule, JsonPipe, ToStateEditor],
   templateUrl: "./editor.html",
   styleUrl: "./editor.css",
+  providers: [
+    {
+      provide: ALL_STATES,
+      useFactory: (editor:Editor)=> (()=>editor.getStates()) ,
+      deps: [Editor]
+    }
+  ]
 })
 export class Editor implements OnInit {
   simulationState = input.required<Simulation>();
@@ -20,8 +28,6 @@ export class Editor implements OnInit {
   defaultStateId: string|null=null;
 
   selectedStateIndex: number|null=null;
-
-  
   
   errorMode: "neutral"|"success"|"fail" = "neutral";
   errorMessage: string|null = null;
@@ -140,5 +146,11 @@ export class Editor implements OnInit {
       return availableStates;
     }
     return [];
+  }
+
+  getStates(){    
+    return this.states
+      .filter(s=>s.name)
+      .map(s=>{ return {name: s.name, _id: s._id} });
   }
 }

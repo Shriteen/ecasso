@@ -94,7 +94,7 @@ export default class Simulation {
     }
 
     const validateCount= (num : number | undefined, condition: (typeof VALID_CONDITIONS)[number] )=>{
-      if(num && !isNaN(num)){
+      if(typeof num != 'undefined' && num!=null && !isNaN(num)){
 	if(Number.isInteger(num) && num>=0 && num<=8)
 	  return;
 	else

@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Simulation from "@shared/models/Simulation.model";
 import { TransitionToRule, State, Condition, TransitionFromRule } from "@shared/types";
 
-type ConditionUI = Partial<Omit<Condition, "children">> & {_id: string, children?: ConditionUI[]};
+export type ConditionUI = Partial<Omit<Condition, "children">> & {_id: string, children?: ConditionUI[], _stateId?: string};
 
 export type ToStateRulesUI= { to: string, _id: string , rule: ConditionUI};
 

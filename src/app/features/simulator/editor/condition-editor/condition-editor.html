@@ -1,0 +1,118 @@
+<div class="condition">
+  <div class="indent" [style.width.px]="this.indent"></div>
+  <div class="details">
+    <select class="condition-options"
+            required
+            [(ngModel)]="this.rule().condition"
+            (ngModelChange)="onConditionChange($event)">
+      @for(c of this.CONDITION_LABELS | keyvalue; track $index){
+        <option [value]="c.key">{{c.value}}</option>
+      }
+    </select>
+    @if(this.rule().condition=="AND" || this.rule().condition=="OR"){
+      <button class="add-child-condition-button" (click)="this.addChildCondtion()">+ condtions</button>
+    }
+
+    @if(this.level()>0){
+      <button class="delete-condition-button" (click)="this.deleteCondtion()">Delete</button>
+    }
+
+    @if(["EQ","NEQ","LT","LTE","GT","GTE"].includes(this.rule().condition ?? "")){
+      <div class="condition-statement">
+        Count of
+        <select required class="adjancy-options" [(ngModel)]="this.rule().adjacency">
+          <option value="MOORE">all neighbours</option>
+          <option value="MANHATTAN">adjacent neighbours</option>
+          <option value="DIAGONAL">diagonal neighbours</option>
+        </select>
+        in
+        <select class="condition-states"
+                required
+                [(ngModel)]="this.rule()._stateId"
+                (ngModelChange)="onStateChange($event)">
+          @for(s of this.getStates(); track $index){
+            <option [value]="s._id">{{s.name}}</option>
+          }
+        </select>
+        state
+        {{this.CONDITION_LABELS[this.rule().condition!]}}
+        <input required type="number" min="0" [max]="this.rule().adjacency=='MOORE'?8:4" step="1" [(ngModel)]="this.rule().value" />
+      </div>
+    } @else if(this.rule().condition=="BTWN") {
+      <div class="condition-statement">
+        Count of
+        <select required class="adjancy-options" [(ngModel)]="this.rule().adjacency">
+          <option value="MOORE">all neighbours</option>
+          <option value="MANHATTAN">adjacent neighbours</option>
+          <option value="DIAGONAL">diagonal neighbours</option>
+        </select>
+        in
+        <select class="condition-states"
+                required
+                [(ngModel)]="this.rule()._stateId"
+                (ngModelChange)="onStateChange($event)">
+          @for(s of this.getStates(); track $index){
+          <option [value]="s._id">{{s.name}}</option>
+          }
+        </select>
+        state is between 
+        <input required type="number" min="0" [max]="this.rule().adjacency=='MOORE'?8:4" step="1" [(ngModel)]="this.rule().valueStart" />
+        and
+        <input required type="number" min="0" [max]="this.rule().adjacency=='MOORE'?8:4" step="1" [(ngModel)]="this.rule().valueEnd" />
+      </div> 
+    } @else if(this.rule().condition=="IN") {
+      <div class="condition-statement">
+        Count of
+        <select required class="adjancy-options" [(ngModel)]="this.rule().adjacency">
+          <option value="MOORE">all neighbours</option>
+          <option value="MANHATTAN">adjacent neighbours</option>
+          <option value="DIAGONAL">diagonal neighbours</option>
+        </select>
+        in
+        <select class="condition-states"
+                required
+                [(ngModel)]="this.rule()._stateId"
+                (ngModelChange)="onStateChange($event)">
+          @for(s of this.getStates(); track $index){
+          <option [value]="s._id">{{s.name}}</option>
+          }
+        </select>
+        state is in 
+        <toggle-group-buttons class="count-in-list-options"
+          [options]="this.rule().adjacency=='MOORE'? [0,1,2,3,4,5,6,7,8] : [0,1,2,3,4]"
+          [(ngModel)]="this.rule().values" />
+      </div> 
+    } @else if(this.rule().condition=="IS") {
+      <div class="condition-statement">
+        <select required
+                class="direction-options"
+                [(ngModel)]="this.rule().direction">
+          @for(d of this.DIRECTION_LABELS | keyvalue; track $index){
+           <option [value]="d.key">{{d.value}}</option>
+          }
+        </select>
+        neighbour is in
+        <select class="condition-states"
+                required
+                [(ngModel)]="this.rule()._stateId"
+                (ngModelChange)="onStateChange($event)">
+          @for(s of this.getStates(); track $index){
+          <option [value]="s._id">{{s.name}}</option>
+          }
+        </select>
+        state
+      </div> 
+    }
+      
+    @if(this.rule().children?.length &&
+      (this.rule().condition=="AND" || this.rule().condition=="OR")){
+      <div class="children">
+        @for(child of this.rule().children; track child._id){
+        <condition-editor [rule]="child"
+                          [level]="this.level()+1"
+                          (deleted)="this.deleteChildCondition($event)" />
+	}
+      </div>
+    }
+  </div>
+</div>

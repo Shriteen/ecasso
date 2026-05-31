@@ -1,0 +1,9 @@
+.toggle-group {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+button.selected {
+  font-weight: bold;
+}

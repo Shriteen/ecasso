@@ -1,0 +1,11 @@
+.condition{
+    display: flex;
+}
+
+.count-in-list-options{
+    display: inline-block;
+}
+
+.ng-invalid{
+    border: 2px solid red;
+}

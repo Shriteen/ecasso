@@ -61,7 +61,7 @@ export default class RuleEngine{
       }
       case "BTWN":{
 	const count= this.getNeighbourCount(cell,rule["state"]!, rule["adjacency"]!);	
-	return count>rule["valueStart"]! && count<rule["valueEnd"]!;
+	return count>=rule["valueStart"]! && count<=rule["valueEnd"]!;
       }
       case "IN":{
 	const count= this.getNeighbourCount(cell,rule["state"]!, rule["adjacency"]!);	

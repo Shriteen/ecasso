@@ -1,0 +1,12 @@
+<div class="toggle-group">
+  @for (option of options; track getValue(option)) {
+    <button
+      type="button"
+      [class.selected]="isSelected(option)"
+      (click)="toggle(option)">
+
+      {{ getLabel(option) }}
+
+    </button>
+  }
+</div>
