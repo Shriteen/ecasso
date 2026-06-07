@@ -1,10 +1,18 @@
 <div class="simulator">
   <div class="top-bar">
-    Top bar
+    <div class="view-selector">
+      <label><input type="radio" [(ngModel)]="this.viewType" value="EDITOR">Edit</label>
+      @if(!isMobile()){      
+        <label><input type="radio" [(ngModel)]="this.viewType" value="SPLIT">Combined</label>
+      }
+      <label><input type="radio" [(ngModel)]="this.viewType" value="VIEWER">View</label>
+    </div>
   </div>
 
-  <div class="main-view">
-    <editor [simulationState]="this.simulation" />
+  <div class="main-view"
+       [class]="viewType.toLowerCase()"
+       >
+    <editor [simulationState]="this.simulation" (compiled)="handleCompile()"/>
     <viewer [simulationState]="this.simulation"
             [width]="this.options.cellSize*this.options.matrixWidth"
             [height]="this.options.cellSize*this.options.matrixHeight"

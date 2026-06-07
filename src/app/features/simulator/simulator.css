@@ -3,10 +3,17 @@
     grid-template-rows: 2.5em 1fr;
     height: 100vh;
 }
-.main-view{
+
+.main-view.split{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 .top-bar{
     border-bottom: 1px solid #555;
+}
+.main-view.viewer Editor{
+    display: none;
+}
+.main-view.editor Viewer{
+    display: none;
 }

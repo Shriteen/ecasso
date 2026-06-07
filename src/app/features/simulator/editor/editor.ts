@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, EventEmitter, input, OnInit, Output, signal } from "@angular/core";
+import { ChangeDetectorRef, Component, computed, EventEmitter, input, OnInit, output, Output, signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import Simulation from "@shared/models/Simulation.model";
 import { TransitionFromRule, TransitionToRule, State } from "@shared/types";
@@ -32,6 +32,8 @@ export class Editor implements OnInit {
   errorMode: "neutral"|"success"|"fail" = "neutral";
   errorMessage: string|null = null;
 
+  compiled= output<void>();
+  
   constructor(private cdr: ChangeDetectorRef){
   }
 
@@ -85,6 +87,8 @@ export class Editor implements OnInit {
         this.errorMode="neutral";
         this.cdr.detectChanges();
       }, 2500);
+      //Emit successful compilation event
+      this.compiled.emit();
     }catch(e: any){
       this.errorMode="fail";      
       this.errorMessage=e.message;
