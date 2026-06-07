@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, ElementRef, input, ViewChild } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import Simulation from "@shared/models/Simulation.model";
 
 @Component({
   selector: "viewer",
-  imports: [],
+  imports: [FormsModule],
   templateUrl: "./viewer.html",
   styleUrl: "./viewer.css",
 })
@@ -19,6 +20,14 @@ export class Viewer implements AfterViewInit {
   playState : "running" | "stopped" = "stopped";
   interval: number= 100;
   playIntervalId: number|undefined;
+  intervalList = [
+    {label:"0.1x", value: 1000},
+    {label:"0.25x", value: 400},
+    {label:"0.5x", value: 200},
+    {label:"1x", value: 100},
+    {label:"2x", value: 50},
+    {label:"10x", value: 10}
+  ];
 
   zoom= 1;
   
@@ -49,6 +58,12 @@ export class Viewer implements AfterViewInit {
     clearInterval(this.playIntervalId);
   }
 
+  updateTimer(interval: number){
+    this.pause();
+    this.interval=interval;
+    this.play();
+  }
+  
   zoomIn(factor: number){
     this.zoom= Math.min(this.zoom*factor, 10);
   }

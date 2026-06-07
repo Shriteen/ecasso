@@ -7,15 +7,32 @@
             [style.zoom]="this.zoom"></canvas>
   </div>
   <div class="button-bar">
-    @if(this.playState=="running"){
-      <button class="pause-btn" (click)="this.pause()">Pause</button>
-    }@else{    
-      <button class="play-btn" (click)="this.play()">Play</button>
-    }
-    <button class="step-btn" (click)="this.step()">Step</button>
-    <button class="reset-btn" (click)="this.reset()">Reset</button>
-    <button class="zoom-in-btn" (click)="this.zoomIn(1.25)">Zoom +</button>
-    <button class="zoom-reset-btn" (click)="this.zoomReset()">{{(this.zoom*100).toFixed(2)}}%</button>
-    <button class="zoom-out-btn" (click)="this.zoomOut(0.8)">Zoom -</button>
+    <div class="player-controls">
+      @if(this.playState=="running"){
+        <button class="pause-btn" (click)="this.pause()">Pause</button>
+      }@else{    
+        <button class="play-btn" (click)="this.play()">Play</button>
+      }
+
+      <select class="speed-control"
+              [(ngModel)]="this.interval"
+              (ngModelChange)="updateTimer($event)">
+        @for(x of this.intervalList ; track $index){
+          <option [value]="x.value">{{x.label}}</option>
+        }
+      </select>  
+      
+      <button class="step-btn" (click)="this.step()">Step</button>
+    </div>
+
+    <div class="board-controls">
+      <button class="reset-btn" (click)="this.reset()">Reset</button>
+    </div>
+
+    <div class="zoom-controls">  
+      <button class="zoom-in-btn" (click)="this.zoomIn(1.25)">Zoom +</button>
+      <button class="zoom-reset-btn" (click)="this.zoomReset()">{{(this.zoom*100).toFixed(2)}}%</button>
+      <button class="zoom-out-btn" (click)="this.zoomOut(0.8)">Zoom -</button>
+    </div>
   </div>
 </div>
