@@ -10,6 +10,7 @@
 }
 .top-bar{
     border-bottom: 1px solid #555;
+    display: flex;
 }
 .main-view.viewer Editor{
     display: none;

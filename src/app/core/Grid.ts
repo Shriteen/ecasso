@@ -27,6 +27,38 @@ export default class Grid<T> {
     );
   }
 
+  /**
+   * @template T
+   * @param {{
+   *   rows: number,
+   *   cols: number,
+   *   data: (any|null)[][]
+   * }} json
+   * @param {(value: any) => T} [hydrate]
+   * @returns {Grid<T>}
+   */
+  static fromJSON<T>(
+    json: {
+      rows: number;
+      cols: number;
+      data: (any | null)[][];
+    },
+    hydrate?: (value: any) => T
+  ): Grid<T> {
+    const grid = new Grid<T>(json.rows, json.cols);
+
+    grid.data = json.data.map(row =>
+      row.map(value => {
+        if (value === null) {
+          return null;
+        }
+
+        return hydrate ? hydrate(value) : value;
+      })
+    );
+
+    return grid;
+  }
   /** @param {number} value @param {number} max */
   wrapIndex(value: number, max: number) {
     return (value % max + max) % max;

@@ -1,5 +1,6 @@
 <div class="simulator">
   <div class="top-bar">
+    <button routerLink="/" class="back-btn">Back</button>
     <div class="view-selector">
       <label><input type="radio" [(ngModel)]="this.viewType" value="EDITOR">Edit</label>
       @if(!isMobile()){      
@@ -12,7 +13,9 @@
   <div class="main-view"
        [class]="viewType.toLowerCase()"
        >
-    <editor [simulationState]="this.simulation" (compiled)="handleCompile()"/>
+    <editor [simulationState]="this.simulation"
+            (compiled)="handleCompile()"
+            (saved)="handleSave()" />
     <viewer [simulationState]="this.simulation"
             [width]="this.options.cellSize*this.options.matrixWidth"
             [height]="this.options.cellSize*this.options.matrixHeight"

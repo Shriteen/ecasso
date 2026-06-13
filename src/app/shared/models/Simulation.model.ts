@@ -250,4 +250,28 @@ export default class Simulation {
     }
   }
 
+  static hydrateFrom(partialSimulation : Partial<Simulation>){
+    if(partialSimulation.states && partialSimulation.defaultState &&
+      partialSimulation.rules && partialSimulation.grid){
+      const hydrated= new Simulation(
+	Array.from(partialSimulation.states.values()),
+	partialSimulation.defaultState,
+	partialSimulation.rules,
+	{
+	  cellSize: partialSimulation.cellSize,
+	  matrixWidth: partialSimulation.matrixWidth,
+	  matrixHeight: partialSimulation.matrixHeight,
+	}
+      )
+
+      hydrated.grid= Grid.fromJSON(partialSimulation.grid);
+
+
+      return hydrated;
+    }else{
+      throw new Error("Incomplete stored data! "+ partialSimulation);
+    }
+    
+  }
+
 }

@@ -1,0 +1,6 @@
+<button (click)="newSimulation()">Create</button>
+<ol>
+    @for(item of this.list; track item.id){
+    <li><a [routerLink]="['/simulation', item.id]">{{item.id}}</a></li>
+    }
+</ol>

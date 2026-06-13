@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, EventEmitter, input, OnInit, output, Output, signal } from "@angular/core";
+import { ChangeDetectorRef, Component, computed, EventEmitter, inject, input, OnInit, output, Output, signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import Simulation from "@shared/models/Simulation.model";
 import { TransitionFromRule, TransitionToRule, State } from "@shared/types";
@@ -7,6 +7,7 @@ import { convertToStates, simulationToStateUIarray, StateUI, stateUIarrayToTrans
 import { JsonPipe } from "@angular/common";
 import { ToStateEditor } from "./to-state-editor/to-state-editor";
 import { ALL_STATES } from "./editor.token";
+import { SimulationService } from "@shared/services/simulation-service";
 
 @Component({
   selector: "editor",
@@ -33,6 +34,8 @@ export class Editor implements OnInit {
   errorMessage: string|null = null;
 
   compiled= output<void>();
+
+  saved= output<void>();
   
   constructor(private cdr: ChangeDetectorRef){
   }

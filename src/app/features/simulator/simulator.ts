@@ -1,4 +1,4 @@
-import { Component, effect, HostListener, signal } from "@angular/core";
+import { Component, effect, HostListener, inject, signal } from "@angular/core";
 import { Viewer } from "./viewer/viewer";
 import { Editor } from "./editor/editor";
 import Simulation from "@shared/models/Simulation.model";
@@ -6,10 +6,12 @@ import { TransitionFromRule } from "@shared/types";
 import Grid from "@core/Grid";
 import { type Cell } from "@shared/types";
 import { FormsModule } from "@angular/forms";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { SimulationData, SimulationService } from "@shared/services/simulation-service";
 
 @Component({
   selector: "simulator",
-  imports: [Editor,Viewer, FormsModule],
+  imports: [Editor,Viewer, FormsModule, RouterLink],
   templateUrl: "./simulator.html",
   styleUrl: "./simulator.css",
 })
@@ -17,6 +19,12 @@ export class Simulator {
 
   simulation:Simulation;
 
+  simulationService = inject(SimulationService);
+
+  private router = inject(Router)
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private id= this.route.snapshot.paramMap.get('id');
+  
   options = {
     cellSize: 10,
     matrixWidth: 60,
@@ -43,48 +51,19 @@ export class Simulator {
       }
     });
     
-    const rules:TransitionFromRule={
-      alive: {
-	dead: {
-	  condition: "OR",
-	  children: [
-	    {
-	      state: "alive",
-	      condition: "LT",
-	      value: 2
-	    },
-	    {
-	      state: "alive",
-	      condition: "GT",
-	      value: 3
-	    }
-	  ]
-	},
-	zombie:{
-	  condition: "DUMMY",
-	}
-      },
-      dead: {
-	alive: {
-	  state: "alive",
-	  condition: "EQ",
-	  value: 3
-	},
-	zombie: {
-	  condition: "DUMMY",
-	}
-      }
-    };
     
-    this.simulation= new Simulation(
-      [{name:"alive", color:"black"},{name: "dead", color:"white"}, {name: "zombie", color:"green"}],
-      "dead",
-      rules,
-      this.options
-    )
-
-
-
+    if(this.id){
+      const simulationData= this.simulationService.getById(this.id);
+      if(simulationData.data){
+	this.simulation= simulationData.data;
+      }else{
+	throw new Error('404 - Simulation Not found');
+      }
+    }
+    else{
+      throw new Error('404 - Id Not found');
+      //TODO create implicitely on error?
+    }
     
   }
 
@@ -98,6 +77,10 @@ export class Simulator {
     if(this.isMobile() && this.viewType=="EDITOR"){
         this.viewType="VIEWER";      
     }
+  }
+
+  handleSave(){
+    this.simulationService.save(this.id!);
   }
   
 }
