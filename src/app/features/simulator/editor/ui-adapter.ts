@@ -48,7 +48,7 @@ export function convertToStates(states: StateUI[]) : State[]{
     if(!state.name || !state.color)
       throw new Error("Incomplete state! "+ JSON.stringify(state));
     
-    tempStates.push({name:state.name, color: state.color});
+    tempStates.push({name:state.name, color: state.color, weight: (state.weight??0)});
   }
   return tempStates; 
 }

@@ -11,12 +11,10 @@ import {
 export default class RuleEngine{
   grid: Grid<Cell>;
   rules: TransitionFromRule;
-  defaultState: string;
 
-  constructor(grid: Grid<Cell>, rules: TransitionFromRule, defaultState: string){
+  constructor(grid: Grid<Cell>, rules: TransitionFromRule){
     this.grid=grid;
     this.rules=rules;
-    this.defaultState=defaultState;
   }
 
   applyRulesToCell(cell:Cell, r: number, c: number): Cell{
@@ -77,10 +75,7 @@ export default class RuleEngine{
       }
       case "IS":{
 	const n=this.getNeighbour(cell,rule["direction"]!);
-	if(rule["state"]=="_ANY")
-	  return n!=null && n.state !== this.defaultState;
-	else
-	  return n!=null && n.state==rule["state"]; 
+	return n!=null && n.state==rule["state"]; 
       }
       case "DUMMY":
 	break;
@@ -117,12 +112,7 @@ export default class RuleEngine{
 	console.log("Unknown neighbour type", type);
 	return 0;
     }
-
-    // Special case which means non default
-    if(state==="_ANY"){
-      return neighbours.filter((c)=> c!=null && c.state!= this.defaultState).length;
-    }
-    
+        
     return neighbours.filter((c)=>c!=null && c.state==state).length;
   }
 

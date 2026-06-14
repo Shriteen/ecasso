@@ -16,8 +16,7 @@
         <label>Color: <input type="color" [(ngModel)]="state.color"></label>
       </div>
       <div class="state-details-bg">
-        <label>Background state: {{state._id==this.defaultStateId?"Yes":"No"}}</label>
-        <button (click)="this.defaultStateId=state._id">Set as Background</button>
+        <label>Initial Population Weight: <input type="number" min="0"  [(ngModel)]="state.weight"></label>
       </div>
       <button (click)="this.deleteState(state._id)">Delete</button>
     </div>

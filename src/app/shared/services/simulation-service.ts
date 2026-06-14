@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import Grid from "@core/Grid";
-import Simulation from "@shared/models/Simulation.model";
+import Simulation, { SimulationParams } from "@shared/models/Simulation.model";
 import { Cell, TransitionFromRule } from "@shared/types";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,18 +27,11 @@ export class SimulationService {
   
   create(){
 
-    const options = {
-    cellSize: 10,
-    matrixWidth: 60,
-    matrixHeight: 70,
-    initializer(grid: Grid<Cell>) {
-      grid.mapInPlace((cell: Cell|null,r:Number,c:Number,grid:Grid<Cell>)=>{
-	return Math.random()<0.1?
-          {state: "alive"} :
-          {state: "dead"};
-      })
+    const options: SimulationParams = {
+      cellSize: 10,
+      matrixWidth: 60,
+      matrixHeight: 70
     }
-  }
     
     const rules:TransitionFromRule={
       alive: {
@@ -74,8 +67,7 @@ export class SimulationService {
     };
     
     const sim= new Simulation(
-      [{name:"alive", color:"black"},{name: "dead", color:"white"}, {name: "zombie", color:"green"}],
-      "dead",
+      [{name:"alive", color:"black", weight: 10},{name: "dead", color:"white", weight: 90}, {name: "zombie", color:"green", weight: 0}],
       rules,
       options
     );
@@ -107,7 +99,6 @@ export class SimulationService {
       if(savedData[id]){
 	console.info("Loaded saved object to memory");
 	inMemoryObj.data=Simulation.hydrateFrom(savedData[id].simulation);
-	//TODO set initializer
       }
     }
 

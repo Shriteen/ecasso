@@ -6,6 +6,7 @@ export const VALID_ADJACENCY = ["MOORE","MANHATTAN","DIAGONAL"] as const;
 export interface State{
   name: string;
   color: string;
+  weight: number;
 }
 
 export interface TransitionFromRule{
@@ -27,7 +28,7 @@ export interface Condition{
   //condition: "AND"|"OR"|"EQ"|"NEQ"|"LT"|"LTE"|"GT"|"GTE"|"BTWN"|"IN"|"IS";
   condition: (typeof VALID_CONDITIONS)[number];
   children?: Condition[]; //Applicable for AND,OR
-  state?: "_ANY" | string; //Applicable to non-composite conditions
+  state?: string; //Applicable to non-composite conditions
   direction?: (typeof VALID_DIRECTIONS)[number]; //Applicable for IS
   adjacency?: (typeof VALID_ADJACENCY)[number]; //Applicable for count based; MOORE is default is not given
   value?: NeighbourCount; // All relational

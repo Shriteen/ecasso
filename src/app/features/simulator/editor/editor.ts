@@ -26,7 +26,6 @@ export class Editor implements OnInit {
   simulationState = input.required<Simulation>();
 
   states: StateUI[]=[];
-  defaultStateId: string|null=null;
 
   selectedStateIndex: number|null=null;
   
@@ -42,12 +41,6 @@ export class Editor implements OnInit {
 
   ngOnInit(): void {
     this.states = simulationToStateUIarray(this.simulationState());
-
-    const filtered = this.states.find(x=>x.name==this.simulationState().defaultState);
-    if(filtered)         // Should always be true, this condition is to satisfy TS
-      this.defaultStateId=filtered._id;
-    else
-      throw new Error("Default state not in states");
     
     this.selectedStateIndex= this.states[0] ? 0 : null;
   }
@@ -75,15 +68,9 @@ export class Editor implements OnInit {
   compile(rules: TransitionFromRule){
     try{
       const tempStates : State[]= convertToStates(this.states);
-
-      let defaultState:string|undefined;
-      if(this.defaultStateId==null){
-        throw new Error("One of the states should be set as background!")
-      }else{
-        defaultState= this.states.find(x=>x._id==this.defaultStateId)?.name ;
-      }
       
-      this.simulationState()?.setRules(rules, tempStates, defaultState);
+      
+      this.simulationState()?.setRules(rules, tempStates);
       this.errorMode="success";      
       this.errorMessage=null;
       setTimeout(()=>{
@@ -103,15 +90,11 @@ export class Editor implements OnInit {
   }
   
   addState(){    
-    this.states.push({_id: uuidv4(), color: "#000000", rules: []});
+    this.states.push({_id: uuidv4(), color: "#000000", weight: 0 ,rules: []});
     this.selectedStateIndex= this.states.length-1;
   }
 
   deleteState(id: string){
-    //If default was current set as null
-    if(this.defaultStateId==id)
-      this.defaultStateId= null;
-
     this.states= this.states.filter(s=>s._id!=id);
 
     //Current must have been selected so need to update

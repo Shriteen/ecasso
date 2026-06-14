@@ -15,23 +15,24 @@ export interface SimulationParams{
   cellSize?: number,
   matrixWidth?: number,
   matrixHeight?: number,
-  initializer?: (grid: Grid<Cell>)=>void
 }
 
 
 export default class Simulation {
   states: Map<string,State>;
-  defaultState: string;
   rules!: TransitionFromRule;
   grid!: Grid<Cell>;
   
   cellSize: number= 10;
   matrixWidth: number=100;
   matrixHeight: number=100;
-  initializer?: (grid: Grid<Cell>)=>void;
   
-  constructor(states : State[],defaultState: string,rules: TransitionFromRule, options: SimulationParams) {
+  constructor(states : State[],rules: TransitionFromRule, options: SimulationParams) {
     this.states= new Map();
+    if(states.length==0){
+      throw new Error("There are no states!");
+    }
+    
     for(const s of states){
       if(!s.name || !s.color)
 	throw new Error("Incomplete state! "+JSON.stringify(s));
@@ -42,32 +43,25 @@ export default class Simulation {
 	throw new Error("Duplicate state name!");
     }
 
-    if(this.states.has(defaultState))
-      this.defaultState=defaultState;
-    else
-      throw new Error("Unknown state set as default!");
-
+    
     //Will throw exception if invalid
     this.setRules(rules);
     
     this.cellSize= options.cellSize ?? this.cellSize;
     this.matrixWidth= typeof options.matrixWidth!="undefined" ? Math.trunc(options.matrixWidth) : this.matrixWidth; 
     this.matrixHeight= typeof options.matrixHeight!="undefined" ? Math.trunc(options.matrixHeight) : this.matrixHeight; 
-    this.initializer= options.initializer;
 
     this.reset();
   }
 
   reset(){
+    const distribution = this.getNormalizedInitialWeight();
+
     this.grid = new Grid<Cell>( this.matrixHeight, this.matrixWidth,
-      (r,c)=>{return {state: this.defaultState}}
+      (r,c)=>{
+	return {state: this.returnStateDistributionBased(distribution) };
+      }
     );
-
-    if(this.initializer){
-      this.initializer(this.grid);
-    }
-
-    this.tick();
   }
   
   validateRules(rules: TransitionFromRule){
@@ -85,7 +79,7 @@ export default class Simulation {
     const validateState= (rule: Condition)=>{
       //Assumes is being called only when mandatory
       if(rule.state){
-	if(rule.state==='_ANY' || this.states.has(rule.state)){
+	if(this.states.has(rule.state)){
 	  return;
 	} else
 	  throw new Error("validateState: Unknown state "+rule.state);	
@@ -198,7 +192,7 @@ export default class Simulation {
   }
 
   tick(){
-    const engine= new RuleEngine(this.grid, this.rules, this.defaultState);
+    const engine= new RuleEngine(this.grid, this.rules);
     this.grid=this.grid.map((cell,r,c,grid)=>engine.applyRulesToCell(cell!, r, c));
   }
 
@@ -206,19 +200,20 @@ export default class Simulation {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     
     this.grid.forEach((cell,r,c,grid)=>{
-      ctx.fillStyle= this.states.get(cell!.state)?.color ??
-	this.states.get(this.defaultState)?.color ??
-	ctx.fillStyle;
+      ctx.fillStyle= this.states.get(cell!.state)?.color ?? ctx.fillStyle;
       ctx.fillRect(c*this.cellSize, r*this.cellSize, this.cellSize, this.cellSize);
     });
   }
 
-  setRules(rules: TransitionFromRule, states?: State[], defaultState?: string){
+  setRules(rules: TransitionFromRule, states?: State[]){
     const backupStateMap= this.states;
-    const backupDefaultState= this.defaultState;
 
     try{
       if(states){		// If states are provided
+	if(states.length==0){
+	  throw new Error("There are no states!");
+	}
+
 	this.states= new Map();
 	for(const s of states){
 	  if(!s.name || !s.color)
@@ -229,13 +224,6 @@ export default class Simulation {
 	  else
 	    throw new Error("Duplicate state name!");
 	}
-
-	if(defaultState){	// If default state is provided
-	  if(this.states.has(defaultState))
-	    this.defaultState=defaultState;
-	  else
-	    throw new Error("Unknown state set as default!");
-	}
       }
       
       //Will throw exception if invalid
@@ -245,17 +233,15 @@ export default class Simulation {
     }catch(e: any){
       //Restore backup and rethrow
       this.states=backupStateMap;
-      this.defaultState=backupDefaultState;
       throw e;
     }
   }
 
   static hydrateFrom(partialSimulation : Partial<Simulation>){
-    if(partialSimulation.states && partialSimulation.defaultState &&
+    if(partialSimulation.states &&
       partialSimulation.rules && partialSimulation.grid){
       const hydrated= new Simulation(
 	Array.from(partialSimulation.states.values()),
-	partialSimulation.defaultState,
 	partialSimulation.rules,
 	{
 	  cellSize: partialSimulation.cellSize,
@@ -270,8 +256,58 @@ export default class Simulation {
       return hydrated;
     }else{
       throw new Error("Incomplete stored data! "+ partialSimulation);
+    } 
+  }
+
+  private getNormalizedInitialWeight(){
+    const statesCopy : (State & {normalizedWeight?: number} & {cumulativeWeight?: number})[] =
+      Array.from(this.states.values(), value => structuredClone(value));
+
+    //If empty just return
+    if(statesCopy.length==0)
+      return statesCopy;
+    
+    let sum = statesCopy.reduce<number>(
+      (total,state)=>total+(Math.abs(state.weight)||0),
+      0
+    );
+
+    if(sum===0){
+      //If all 0, we consider all equal probability 
+      statesCopy.forEach(state=>{state.normalizedWeight= 1/statesCopy.length})
+    }
+    else{
+      //Normalize the weights
+      const factor= 1/sum;
+      statesCopy.forEach(state=>{state.normalizedWeight= (state.weight||0)*factor})
+    }
+
+    //Compute cumulative sum
+    statesCopy.reduce((sum, obj) => {
+      sum =sum+ (obj.normalizedWeight||0);
+      obj.cumulativeWeight = sum;
+      return sum;
+    }, 0);
+    
+    return statesCopy;
+  }
+
+  returnStateDistributionBased(
+    states : (State & {normalizedWeight?: number} & {cumulativeWeight?: number})[]
+  ): string{
+    const random = Math.random();
+
+    for(let i=0; i<states.length; i++ ){
+      if((states[i]?.normalizedWeight??0) > 0 &&
+	random >= (states[i-1]?.cumulativeWeight??0) &&
+	random <(states[i]?.cumulativeWeight ?? 1))
+	{
+	  return states[i].name;
+	}
     }
     
+    //Return last as fallback
+    return states[states.length-1].name;
   }
 
 }
