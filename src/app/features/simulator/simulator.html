@@ -17,8 +17,8 @@
             (compiled)="handleCompile()"
             (saved)="handleSave()" />
     <viewer [simulationState]="this.simulation"
-            [width]="this.options.cellSize*this.options.matrixWidth"
-            [height]="this.options.cellSize*this.options.matrixHeight"
+            [width]="this.simulation.cellSize*this.simulation.matrixWidth"
+            [height]="this.simulation.cellSize*this.simulation.matrixHeight"
             />
   </div>
 </div>

@@ -20,23 +20,10 @@ export class Simulator {
   simulation:Simulation;
 
   simulationService = inject(SimulationService);
-
+  
   private router = inject(Router)
   private route: ActivatedRoute = inject(ActivatedRoute);
   private id= this.route.snapshot.paramMap.get('id');
-  
-  options = {
-    cellSize: 10,
-    matrixWidth: 60,
-    matrixHeight: 70,
-    initializer(grid: Grid<Cell>) {
-      grid.mapInPlace((cell: Cell|null,r:Number,c:Number,grid:Grid<Cell>)=>{
-	return Math.random()<0.1?
-          {state: "alive"} :
-          {state: "dead"};
-      })
-    }
-  }
 
   private readonly MOBILE_WIDTH= 768;
   isMobile = signal(window.innerWidth < this.MOBILE_WIDTH);
