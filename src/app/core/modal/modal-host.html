@@ -1,0 +1,8 @@
+@if(this.modalConfig){
+  <div class="modal-overlay">
+    <div class="modal-container">
+      <ng-container *ngComponentOutlet="modalConfig.component; inputs: componentInputs">
+      </ng-container>
+    </div>
+  </div>
+}
