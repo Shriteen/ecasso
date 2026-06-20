@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export interface SimulationData{
   id: string,
+  name: string,
   data?: Simulation 
 }; 
 
@@ -18,7 +19,10 @@ export class SimulationService {
 
   constructor(){
     const savedData=JSON.parse(localStorage.getItem("saved_simulations") ?? "{}");
-    this.repository= Object.keys(savedData).map(id=>{return {id: id}});;
+    this.repository= Object.entries(savedData).map(([id,tempValue])=>{
+      const value= tempValue as SimulationData;       // Just to satisfy TS tantrums
+      return {id: id, name: value.name??"Untitled"}
+    });
   }
 
   getAll(){
@@ -74,6 +78,7 @@ export class SimulationService {
     
     const item: SimulationData= {
       id: uuidv4(),
+      name: "Untitled",
       data: sim 
     }
     
@@ -110,7 +115,8 @@ export class SimulationService {
     if(data){
       const savedData=JSON.parse(localStorage.getItem("saved_simulations") ?? "{}");
       savedData[id]={
-	simulation: data.data
+	simulation: data.data,
+	name: data.name
       }
 
       localStorage.setItem("saved_simulations", JSON.stringify(savedData,
@@ -126,5 +132,26 @@ export class SimulationService {
       );
     }
   }
+
+  rename(id: string, name: string){
+    const data= this.repository.filter(x=> x.id==id)[0];
+    data.name=name;
+    this.save(id);
+  }
+
+  saveAs(id: string, name: string){
+    const data= this.repository.filter(x=> x.id==id)[0];
+    
+    const newItem: SimulationData=structuredClone(data);
+    newItem.id= uuidv4();
+    newItem.name= name;
+    newItem.data= Simulation.hydrateFrom(newItem.data!);
+    
+    this.repository.push(newItem);
+    this.save(newItem.id);
+    
+    return newItem.id;
+  }
+
   
 }

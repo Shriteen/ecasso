@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
+import { ModalService } from "@core/modal/ModalService";
 import { SimulationService } from "@shared/services/simulation-service";
 
 @Component({
@@ -13,6 +14,8 @@ export class Home {
   simulationService= inject(SimulationService);
   list= this.simulationService.getAll();
 
+  modalService= inject(ModalService);
+  
   constructor(private router: Router ){
   }
   

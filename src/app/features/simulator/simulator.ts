@@ -8,6 +8,8 @@ import { type Cell } from "@shared/types";
 import { FormsModule } from "@angular/forms";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { SimulationData, SimulationService } from "@shared/services/simulation-service";
+import { ModalService } from "@core/modal/ModalService";
+import { SaveDialog } from "./save-dialog/save-dialog";
 
 @Component({
   selector: "simulator",
@@ -17,14 +19,17 @@ import { SimulationData, SimulationService } from "@shared/services/simulation-s
 })
 export class Simulator {
 
-  simulation:Simulation;
-
+  simulation?:Simulation;
+  name?: string;
+  
   simulationService = inject(SimulationService);
   
   private router = inject(Router)
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private id= this.route.snapshot.paramMap.get('id');
+  private id:string|null=null;
 
+  private modalService= inject(ModalService);
+  
   private readonly MOBILE_WIDTH= 768;
   isMobile = signal(window.innerWidth < this.MOBILE_WIDTH);
   
@@ -37,23 +42,37 @@ export class Simulator {
 	this.viewType="EDITOR";
       }
     });
-    
-    
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+      this.load();
+    });
+  }
+  
+  load(){
+    try{
     if(this.id){
       const simulationData= this.simulationService.getById(this.id);
       if(simulationData.data){
 	this.simulation= simulationData.data;
+	this.name= simulationData.name;
       }else{
 	throw new Error('404 - Simulation Not found');
       }
     }
     else{
       throw new Error('404 - Id Not found');
-      //TODO create implicitely on error?
     }
-    
-  }
+    }
+    catch(e){
+      //TODO handle exception not found
+      console.log(e)
+    }
 
+  }
+  
   @HostListener("window:resize")
   onResize(){
     this.isMobile.set(window.innerWidth < this.MOBILE_WIDTH);
@@ -67,7 +86,15 @@ export class Simulator {
   }
 
   handleSave(){
-    this.simulationService.save(this.id!);
+    this.modalService.open({
+      component: SaveDialog,
+      inputs: {
+        id: this.id!,
+        updateNameFunction: (name: string)=>{
+          this.name= name;
+        }
+      }
+    })
   }
   
 }
