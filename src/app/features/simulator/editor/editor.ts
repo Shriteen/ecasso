@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, EventEmitter, inject, input, OnInit, output, Output, signal } from "@angular/core";
+import { ChangeDetectorRef, Component, computed, effect, EventEmitter, inject, input, OnInit, output, Output, signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import Simulation from "@shared/models/Simulation.model";
 import { TransitionFromRule, TransitionToRule, State } from "@shared/types";
@@ -24,7 +24,8 @@ import { SimulationService } from "@shared/services/simulation-service";
 })
 export class Editor implements OnInit {
   simulationState = input.required<Simulation>();
-
+  persistedSimulation = input<boolean>();
+  
   states: StateUI[]=[];
 
   selectedStateIndex: number|null=null;
@@ -35,14 +36,18 @@ export class Editor implements OnInit {
   compiled= output<void>();
 
   saved= output<void>();
+  reverted= output<void>();
   
   constructor(private cdr: ChangeDetectorRef){
+
+    effect(() => {
+      this.states = simulationToStateUIarray(this.simulationState());
+      this.selectedStateIndex= this.states[0] ? 0 : null;
+    });
+    
   }
 
   ngOnInit(): void {
-    this.states = simulationToStateUIarray(this.simulationState());
-    
-    this.selectedStateIndex= this.states[0] ? 0 : null;
   }
   
   compileFromText(json : string){

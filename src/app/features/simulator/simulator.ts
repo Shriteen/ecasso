@@ -10,10 +10,12 @@ import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { SimulationData, SimulationService } from "@shared/services/simulation-service";
 import { ModalService } from "@core/modal/ModalService";
 import { SaveDialog } from "./save-dialog/save-dialog";
+import { JsonPipe } from "@angular/common";
+import { RevertDialog } from "./revert-dialog/revert-dialog";
 
 @Component({
   selector: "simulator",
-  imports: [Editor,Viewer, FormsModule, RouterLink],
+  imports: [Editor,Viewer, FormsModule, RouterLink, JsonPipe],
   templateUrl: "./simulator.html",
   styleUrl: "./simulator.css",
 })
@@ -34,6 +36,8 @@ export class Simulator {
   isMobile = signal(window.innerWidth < this.MOBILE_WIDTH);
   
   viewType: "SPLIT"|"EDITOR"|"VIEWER"= "SPLIT";
+
+  persistedSimulation: boolean= false;
   
   constructor(){
     effect(()=>{
@@ -53,18 +57,19 @@ export class Simulator {
   
   load(){
     try{
-    if(this.id){
-      const simulationData= this.simulationService.getById(this.id);
-      if(simulationData.data){
-	this.simulation= simulationData.data;
-	this.name= simulationData.name;
-      }else{
-	throw new Error('404 - Simulation Not found');
+      if(this.id){
+        const simulationData= this.simulationService.getById(this.id);
+        if(simulationData.data){
+	  this.simulation= simulationData.data;
+	  this.name= simulationData.name;
+          this.persistedSimulation= simulationData.persistedSimulation ?? false;
+        }else{
+	  throw new Error('404 - Simulation Not found');
+        }
       }
-    }
-    else{
-      throw new Error('404 - Id Not found');
-    }
+      else{
+        throw new Error('404 - Id Not found');
+      }
     }
     catch(e){
       //TODO handle exception not found
@@ -90,11 +95,24 @@ export class Simulator {
       component: SaveDialog,
       inputs: {
         id: this.id!,
-        updateNameFunction: (name: string)=>{
-          this.name= name;
-        }
+        reloadFunction: ()=>{
+          this.load();          
+        },
+        saved: this.persistedSimulation
       }
     })
+  }
+
+  handleRevert(){
+    this.modalService.open({
+      component: RevertDialog,
+      inputs: {
+        id: this.id!,
+        reloadFunction: ()=>{
+          this.load();
+        }
+      }
+    });
   }
   
 }

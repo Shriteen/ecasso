@@ -1,10 +1,10 @@
 <div class="save-dialog">
     <label class="name-input">Name: <input [(ngModel)]="this.name" required /></label>
     <div class="buttons">
-      @if(this.name==this.originalName){
+      @if(this.saved==false || this.name?.trim()==this.originalName ){
         <button (click)="this.save()" [disabled]="this.name===''">Save</button>
       }@else{
-        <button (click)="this.rename()" [disabled]="this.name===''">Rename</button>
+        <button (click)="this.save()" [disabled]="this.name===''">Rename</button>
         <button (click)="this.saveAsCopy()" [disabled]="this.name===''">Save Copy</button>
       }
       <button (click)="this._close()?.()">Cancel</button>

@@ -13,7 +13,8 @@ import { SimulationService } from "@shared/services/simulation-service";
 export class SaveDialog extends ModalInterface{
 
   @Input({ required: true }) id!:string;
-  @Input() updateNameFunction?: (newName:string)=>void;
+  @Input() reloadFunction?: ()=>void;
+  @Input() saved?: boolean;
 
   originalName: string | undefined;
   name: string | undefined;
@@ -32,18 +33,16 @@ export class SaveDialog extends ModalInterface{
   }
 
   save(){
-    this.simulationService.save(this.id!);
-    this._close()?.();
-  }
-
-  rename(){
-    this.simulationService.rename(this.id!, this.name!);
-    this?.updateNameFunction?.(this.name!);
+    if(this.name?.trim()==this.originalName)
+      this.simulationService.save(this.id!);
+    else
+      this.simulationService.rename(this.id!, this.name?.trim()!);
+    this?.reloadFunction?.();    
     this._close()?.();
   }
 
   saveAsCopy(){
-    const newId:string=this.simulationService.saveAs(this.id!, this.name!);
+    const newId:string=this.simulationService.saveAs(this.id!, this.name?.trim()!);
     this._close()?.();    
     this.router.navigate(['/simulation', newId]);
   }

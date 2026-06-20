@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, input, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, effect, ElementRef, input, ViewChild } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import Simulation from "@shared/models/Simulation.model";
 
@@ -30,6 +30,15 @@ export class Viewer implements AfterViewInit {
   ];
 
   zoom= 1;
+
+  constructor(){
+    effect(() => {
+      const simulationState= this.simulationState();
+      if(this.ctx)
+        simulationState?.render(this.ctx);
+    });
+    
+  }
   
   ngAfterViewInit(): void {
     this.ctx = this.canvasElement.nativeElement.getContext("2d")!;

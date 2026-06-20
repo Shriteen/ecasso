@@ -7,7 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 export interface SimulationData{
   id: string,
   name: string,
-  data?: Simulation 
+  data?: Simulation,
+  persistedSimulation?: boolean,
 }; 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class SimulationService {
     const savedData=JSON.parse(localStorage.getItem("saved_simulations") ?? "{}");
     this.repository= Object.entries(savedData).map(([id,tempValue])=>{
       const value= tempValue as SimulationData;       // Just to satisfy TS tantrums
-      return {id: id, name: value.name??"Untitled"}
+      return {id: id, name: value.name??"Untitled", persistedSimulation: true}
     });
   }
 
@@ -79,7 +80,8 @@ export class SimulationService {
     const item: SimulationData= {
       id: uuidv4(),
       name: "Untitled",
-      data: sim 
+      data: sim,
+      persistedSimulation: false
     }
     
     this.repository.push(item);
@@ -130,6 +132,8 @@ export class SimulationService {
 	  return value;
 	})
       );
+
+      data.persistedSimulation=true;
     }
   }
 
@@ -149,9 +153,37 @@ export class SimulationService {
     
     this.repository.push(newItem);
     this.save(newItem.id);
+
+    newItem.persistedSimulation=true;
     
     return newItem.id;
   }
 
+  revert(id: string){
+    const index=this.repository.findIndex(x=> x.id==id);
+
+    if(index!=-1){
+      const savedData=JSON.parse(
+	localStorage.getItem("saved_simulations") ?? "{}",
+	(key, value) => {
+	  if (value?.__type === "Map") {
+	    return new Map(value.entries);
+	  }
+	  return value;
+	}
+      );
+
+      if(savedData[id]){
+	console.info("Reloaded saved object to memory");
+	this.repository[index]={
+	  ...this.repository[index],
+	  data: Simulation.hydrateFrom(savedData[id].simulation)
+	};
+      }else
+	throw new Error("ID not present!");
+    }else
+      throw new Error("ID not present!");
+
+  }
   
 }

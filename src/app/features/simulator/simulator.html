@@ -17,7 +17,9 @@
        >
       <editor [simulationState]="this.simulation"
             (compiled)="handleCompile()"
-            (saved)="handleSave()" />
+            (saved)="handleSave()"
+            (reverted)="handleRevert()"
+            [persistedSimulation]="this.persistedSimulation" />
       <viewer [simulationState]="this.simulation"
             [width]="this.simulation.cellSize*this.simulation.matrixWidth"
             [height]="this.simulation.cellSize*this.simulation.matrixHeight"
