@@ -2,12 +2,9 @@ import { Component, effect, HostListener, inject, signal } from "@angular/core";
 import { Viewer } from "./viewer/viewer";
 import { Editor } from "./editor/editor";
 import Simulation from "@shared/models/Simulation.model";
-import { TransitionFromRule } from "@shared/types";
-import Grid from "@core/Grid";
-import { type Cell } from "@shared/types";
 import { FormsModule } from "@angular/forms";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { SimulationData, SimulationService } from "@shared/services/simulation-service";
+import { SimulationService } from "@shared/services/simulation-service";
 import { ModalService } from "@core/modal/ModalService";
 import { SaveDialog } from "./save-dialog/save-dialog";
 import { JsonPipe } from "@angular/common";
@@ -64,16 +61,16 @@ export class Simulator {
 	  this.name= simulationData.name;
           this.persistedSimulation= simulationData.persistedSimulation ?? false;
         }else{
-	  throw new Error('404 - Simulation Not found');
+	  throw new Error('Simulation Not found');
         }
       }
       else{
-        throw new Error('404 - Id Not found');
+        throw new Error('Id Not found');
       }
     }
     catch(e){
-      //TODO handle exception not found
       console.log(e)
+      this.router.navigate(['/simulation/error']);
     }
 
   }
