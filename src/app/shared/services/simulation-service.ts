@@ -27,7 +27,7 @@ export class SimulationService {
   }
 
   getAll(){
-    return this.repository.map(x=>{return {id: x.id}});
+    return this.repository;
   }
   
   create(){
@@ -112,6 +112,34 @@ export class SimulationService {
     return inMemoryObj;
   }
 
+  delete(id: string){
+    const index=this.repository.findIndex(x=> x.id==id);
+    if(index!==-1){
+      const data= this.repository[index];
+
+      //Remove from memory
+      this.repository.splice(index, 1);
+
+      //If present remove from storage
+      if(data.persistedSimulation){
+	const savedData=JSON.parse(localStorage.getItem("saved_simulations") ?? "{}");
+	delete savedData[id];
+
+	localStorage.setItem("saved_simulations", JSON.stringify(savedData,
+	  (key, value) => {
+	    if (value instanceof Map) {
+	      return {
+		__type: "Map",
+		entries: [...value.entries()]
+	      };
+	    }
+	    return value;
+	  })
+	);
+      }
+    }
+  }
+  
   save(id: string){
     const data= this.repository.filter(x=> x.id==id)[0];
     if(data){

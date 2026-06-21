@@ -2,6 +2,7 @@ import { Component, inject } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { ModalService } from "@core/modal/ModalService";
 import { SimulationService } from "@shared/services/simulation-service";
+import { DeleteDialog } from "./delete-dialog/delete-dialog";
 
 @Component({
   selector: "app-home",
@@ -23,4 +24,14 @@ export class Home {
     const id= this.simulationService.create();
     this.router.navigate(['/simulation', id]);
   }
+
+  delete(id: string){
+    this.modalService.open({
+      component: DeleteDialog,
+      inputs: {
+        id: id
+      }
+    });
+  }
+  
 }

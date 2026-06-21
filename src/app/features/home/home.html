@@ -1,6 +1,17 @@
-<button (click)="newSimulation()">Create</button>
-<ol>
-    @for(item of this.list; track item.id){
-    <li><a [routerLink]="['/simulation', item.id]">{{item.id}}</a></li>
-    }
-</ol>
+<header>
+    <h1> ECASSO - Evolutionary Cellular Automata Sandbox SOup</h1>
+    <p>Art imitates life, Life reflects art</p>
+</header>
+<main>
+    <button (click)="newSimulation()">Create</button>
+    <table>
+        <tr><th>Name</th> <th>Saved?</th> <th>Actions</th></tr>
+      @for(item of this.list; track item.id){
+        <tr>
+            <td><a [routerLink]="['/simulation', item.id]">{{item.name}}</a></td>
+            <td>{{item.persistedSimulation}}</td>
+            <td><button (click)="this.delete(item.id)">Delete</button></td>
+        </tr>
+      }
+    </table>
+</main>
