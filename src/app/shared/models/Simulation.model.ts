@@ -160,6 +160,7 @@ export default class Simulation {
 	      validateDirection(rule);
 	      break;
 	    case "DUMMY":
+	    case "TRUE":
 	      break;
 	  }
 	}else

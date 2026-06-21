@@ -10,7 +10,8 @@ export const CONDITION_LABELS={
   "BTWN": "Between",
   "IN": "In List",
   "IS": "Is",
-  "DUMMY": "Always false"
+  "DUMMY": "Always false",
+  "TRUE": "Always true"
 }
 
 export const DIRECTION_LABELS = {

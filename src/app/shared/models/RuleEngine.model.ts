@@ -77,6 +77,9 @@ export default class RuleEngine{
 	const n=this.getNeighbour(cell,rule["direction"]!);
 	return n!=null && n.state==rule["state"]; 
       }
+      case "TRUE":{
+	return true;
+      }
       case "DUMMY":
 	break;
       case undefined:

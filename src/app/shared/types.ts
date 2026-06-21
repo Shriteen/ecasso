@@ -1,4 +1,4 @@
-export const VALID_CONDITIONS = ["AND","OR","EQ","NEQ","LT","LTE","GT","GTE","BTWN","IN","IS","DUMMY"] as const;
+export const VALID_CONDITIONS = ["AND","OR","EQ","NEQ","LT","LTE","GT","GTE","BTWN","IN","IS","DUMMY","TRUE"] as const;
 export const VALID_DIRECTIONS = ["T","B","L","R","TL","TR","BL","BR"] as const;
 export const VALID_ADJACENCY = ["MOORE","MANHATTAN","DIAGONAL"] as const;
 
@@ -25,7 +25,6 @@ which case can have which optional properties are needed in which
 case. But since the shape of objects is going to be dynamic and not
 available at compile time, it shouldn't matter. */
 export interface Condition{
-  //condition: "AND"|"OR"|"EQ"|"NEQ"|"LT"|"LTE"|"GT"|"GTE"|"BTWN"|"IN"|"IS";
   condition: (typeof VALID_CONDITIONS)[number];
   children?: Condition[]; //Applicable for AND,OR
   state?: string; //Applicable to non-composite conditions
