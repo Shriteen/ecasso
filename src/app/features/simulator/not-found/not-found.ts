@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
-import { SimulationService } from "@shared/services/simulation-service";
+import { ModalService } from "@core/modal/ModalService";
+import { CreateDialog } from "@shared/create-dialog/create-dialog";
 
 @Component({
   selector: "app-not-found",
@@ -9,13 +10,11 @@ import { SimulationService } from "@shared/services/simulation-service";
   styleUrl: "./not-found.css",
 })
 export class NotFound {
-  simulationService= inject(SimulationService);
 
-  constructor(private router: Router ){}
+  constructor(private router: Router, private modalService: ModalService ){}
   
   newSimulation(){
-    const id= this.simulationService.create();
-    this.router.navigate(['/simulation', id]);
+    this.modalService.open({ component: CreateDialog });
   }
   
 }

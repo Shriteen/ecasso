@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import Grid from "@core/Grid";
 import Simulation, { SimulationParams } from "@shared/models/Simulation.model";
+import { getSimulationPreset, SimulationPresetName } from "@shared/models/Simulation.presets";
 import { Cell, TransitionFromRule } from "@shared/types";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,56 +31,18 @@ export class SimulationService {
     return this.repository;
   }
   
-  create(){
+  create(presetName: SimulationPresetName){
+    const preset =getSimulationPreset(presetName);
 
-    const options: SimulationParams = {
-      cellSize: 10,
-      matrixWidth: 60,
-      matrixHeight: 70
-    }
-    
-    const rules:TransitionFromRule={
-      alive: {
-	dead: {
-	  condition: "OR",
-	  children: [
-	    {
-	      state: "alive",
-	      condition: "LT",
-	      value: 2
-	    },
-	    {
-	      state: "alive",
-	      condition: "GT",
-	      value: 3
-	    }
-	  ]
-	},
-	zombie:{
-	  condition: "DUMMY",
-	}
-      },
-      dead: {
-	alive: {
-	  state: "alive",
-	  condition: "EQ",
-	  value: 3
-	},
-	zombie: {
-	  condition: "DUMMY",
-	}
-      }
-    };
-    
     const sim= new Simulation(
-      [{name:"alive", color:"black", weight: 10},{name: "dead", color:"white", weight: 90}, {name: "zombie", color:"green", weight: 0}],
-      rules,
-      options
+      preset.states,
+      preset.rules,
+      preset.options
     );
     
     const item: SimulationData= {
       id: uuidv4(),
-      name: "Untitled",
+      name: preset.name?? "Untitled",
       data: sim,
       persistedSimulation: false
     }

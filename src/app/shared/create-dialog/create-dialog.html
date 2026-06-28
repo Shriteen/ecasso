@@ -1,0 +1,12 @@
+<div class="create-dialog">
+  <label>Choose preset:</label>
+  <select [(ngModel)]="this.preset">
+    @for(preset of this.presetOptions; track $index){
+      <option [value]="preset.enum">{{preset.displayValue}}</option>
+    }
+  </select>
+  <div class="buttons">
+    <button (click)="this._close()?.()">Cancel</button>
+    <button (click)="this.create()">Create</button>
+  </div>
+</div>

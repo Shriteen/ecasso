@@ -1,0 +1,15 @@
+.create-dialog{
+    background: white;
+    min-width: 30vw;
+    min-height: 20vh;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+}
