@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import ModalInterface from "@core/modal/ModalInterface";
+import { ModalService } from "@core/modal/ModalService";
 import { SimulationService } from "@shared/services/simulation-service";
 
 @Component({
@@ -8,16 +8,18 @@ import { SimulationService } from "@shared/services/simulation-service";
   templateUrl: "./delete-dialog.html",
   styleUrl: "./delete-dialog.css",
 })
-export class DeleteDialog extends ModalInterface{
+export class DeleteDialog{
   @Input({ required: true }) id!:string;
 
-  constructor(private simulationService: SimulationService){
-    super();
+  modalService: ModalService;
+  
+  constructor(private simulationService: SimulationService, modalService : ModalService){
+    this.modalService=modalService;    
   }
   
   delete(){
     this.simulationService.delete(this.id!);
-    this._close()?.();
+    this.modalService.close();    
   }
   
 }

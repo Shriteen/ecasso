@@ -15,4 +15,8 @@ export class ModalService {
   open(config: ModalConfig) {
     this.modalSubject.next(config);
   }
+
+  close() {
+    this.modalSubject.next(null);
+  }
 }

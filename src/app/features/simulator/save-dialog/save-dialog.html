@@ -7,6 +7,6 @@
         <button (click)="this.save()" [disabled]="this.name===''">Rename</button>
         <button (click)="this.saveAsCopy()" [disabled]="this.name===''">Save Copy</button>
       }
-      <button (click)="this._close()?.()">Cancel</button>
+      <button (click)="this.modalService.close()">Cancel</button>
     </div>
 </div>

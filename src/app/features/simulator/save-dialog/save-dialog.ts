@@ -1,7 +1,7 @@
 import { Component, inject, Input } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
-import ModalInterface from "@core/modal/ModalInterface";
+import { ModalService } from "@core/modal/ModalService";
 import { SimulationService } from "@shared/services/simulation-service";
 
 @Component({
@@ -10,7 +10,7 @@ import { SimulationService } from "@shared/services/simulation-service";
   templateUrl: "./save-dialog.html",
   styleUrl: "./save-dialog.css",
 })
-export class SaveDialog extends ModalInterface{
+export class SaveDialog{
 
   @Input({ required: true }) id!:string;
   @Input() reloadFunction?: ()=>void;
@@ -19,8 +19,10 @@ export class SaveDialog extends ModalInterface{
   originalName: string | undefined;
   name: string | undefined;
 
-  constructor(private router: Router, private simulationService: SimulationService){
-    super();
+  modalService: ModalService;
+  
+  constructor(private router: Router, private simulationService: SimulationService, modalService: ModalService){
+    this.modalService=modalService;
   }
   
   ngOnInit(){
@@ -38,12 +40,14 @@ export class SaveDialog extends ModalInterface{
     else
       this.simulationService.rename(this.id!, this.name?.trim()!);
     this?.reloadFunction?.();    
-    this._close()?.();
+    this.modalService.close();
+    
   }
 
   saveAsCopy(){
     const newId:string=this.simulationService.saveAs(this.id!, this.name?.trim()!);
-    this._close()?.();    
+    this.modalService.close();
+    
     this.router.navigate(['/simulation', newId]);
   }
 }
