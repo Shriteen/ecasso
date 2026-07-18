@@ -4,6 +4,7 @@ import { ModalService } from "@core/modal/ModalService";
 import { SimulationService } from "@shared/services/simulation-service";
 import { DeleteDialog } from "./delete-dialog/delete-dialog";
 import { CreateDialog } from "@shared/create-dialog/create-dialog";
+import { ImportDialog } from "./import-dialog/import-dialog";
 
 @Component({
   selector: "app-home",
@@ -25,6 +26,10 @@ export class Home {
     this.modalService.open({ component: CreateDialog });
   }
 
+  importSimulation(){
+    this.modalService.open({ component: ImportDialog });
+  }
+
   delete(id: string){
     this.modalService.open({
       component: DeleteDialog,
@@ -33,5 +38,10 @@ export class Home {
       }
     });
   }
+
+  export(id: string){
+    this.simulationService.export(id);
+  }
+  
   
 }

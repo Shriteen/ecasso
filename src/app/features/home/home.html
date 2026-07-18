@@ -4,13 +4,17 @@
 </header>
 <main>
     <button (click)="newSimulation()">Create</button>
+    <button (click)="importSimulation()">Import from file</button>
     <table>
         <tr><th>Name</th> <th>Saved?</th> <th>Actions</th></tr>
       @for(item of this.list; track item.id){
         <tr>
             <td><a [routerLink]="['/simulation', item.id]">{{item.name}}</a></td>
             <td>{{item.persistedSimulation}}</td>
-            <td><button (click)="this.delete(item.id)">Delete</button></td>
+            <td>
+                <button (click)="this.delete(item.id)">Delete</button>
+                <button (click)="this.export(item.id)">Export</button>
+            </td>
         </tr>
       }
     </table>

@@ -1,0 +1,12 @@
+<div class="import-dialog">
+  <label>Select the JSON file:
+    <input type="file" (change)="handleFileInput($event.target.files)" accept="application/json"/>
+  </label>
+  @if(this.errorMessage){
+    <span class="errors">{{this.errorMessage}}</span>
+  }
+  <div class="buttons">
+    <button (click)="this.modalService.close()" >Cancel</button>
+    <button (click)="this.import()" [disabled]="this.fileToImport==null">Import</button>
+  </div>
+</div>

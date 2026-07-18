@@ -176,5 +176,60 @@ export class SimulationService {
       throw new Error("ID not present!");
 
   }
+
+  export(id: string){
+    const data=this.getById(id);
+    const exportObj= JSON.stringify(
+      {
+	simulation: data.data,
+	name: data.name
+      },
+      (key, value) => {
+	if (value instanceof Map) {
+	  return {
+	    __type: "Map",
+	    entries: [...value.entries()]
+	  };
+	}
+	return value;
+      });
+    
+    const blob = new Blob([exportObj], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = data.name+'.json';
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+  }
+
+  async import(blob: Blob){
+    const json= await blob.text();
+
+    const data=JSON.parse( json ?? "{}",
+	(key, value) => {
+	  if (value?.__type === "Map") {
+	    return new Map(value.entries);
+	  }
+	  return value;
+	}
+      );
+    
+    const sim: Simulation=Simulation.hydrateFrom(data.simulation);
+    
+    const item: SimulationData= {
+      id: uuidv4(),
+      name: data.name,
+      data: sim,
+      persistedSimulation: false
+    }
+    
+    this.repository.push(item);
+  }
   
 }
