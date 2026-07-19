@@ -1,4 +1,4 @@
-export const VALID_CONDITIONS = ["AND","OR","EQ","NEQ","LT","LTE","GT","GTE","BTWN","IN","IS","DUMMY","TRUE","RAND"] as const;
+export const VALID_CONDITIONS = ["AND","OR","EQ","NEQ","LT","LTE","GT","GTE","BTWN","IN","IS","DUMMY","TRUE","RAND","MAJOR"] as const;
 export const VALID_DIRECTIONS = ["T","B","L","R","TL","TR","BL","BR"] as const;
 export const VALID_ADJACENCY = ["MOORE","MANHATTAN","DIAGONAL"] as const;
 
@@ -35,6 +35,8 @@ export interface Condition{
   valueEnd?: NeighbourCount; // Applicable for BTWN
   values?: NeighbourCount[]; //Applicable for IN
   probability?: number; //Applicable for RAND
+  exclude?: boolean; //Applicable for MAJOR
+  excludeState?: string; //Applicable for MAJOR 
 }
 
 export interface Cell{

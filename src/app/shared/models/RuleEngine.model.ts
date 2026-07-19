@@ -1,4 +1,5 @@
 import Grid from "@core/Grid";
+import { getMostFrequentValue } from "@core/utils";
 import {
   VALID_ADJACENCY,
   VALID_DIRECTIONS,
@@ -85,6 +86,9 @@ export default class RuleEngine{
       case "RAND":{
 	return Math.random() <= rule["probability"]!
       }
+      case "MAJOR":{
+	return this.isMajority(cell,rule);
+      }
       case undefined:
 	break;
       default:
@@ -144,6 +148,36 @@ export default class RuleEngine{
 	console.log("Unknown direction", direction);	
     }
     return null;
+  }
+
+  isMajority(cell: Cell,rule: Condition){
+    let type=rule.adjacency;
+    if(!type)
+      type="MOORE";    
+    
+    let neighbours: (Cell|null)[];
+    
+    switch(type){
+      case "MOORE":
+	neighbours= this.grid.getAll8(cell.row! , cell.col!);
+	break;
+      case "MANHATTAN":
+	neighbours= this.grid.getAdjacent4(cell.row!, cell.col!);
+	break;
+      case "DIAGONAL":
+	neighbours= this.grid.getDiagonal4(cell.row!, cell.col!);
+	break;
+      default:
+	console.log("Unknown neighbour type", type);
+	return false;
+    }
+    
+    const filteredNeighbours= (rule.exclude)?
+      neighbours.filter(s=>s).filter(s=> s?.state != rule.excludeState) :
+      neighbours.filter(s=>s);
+
+    return rule.state === getMostFrequentValue(filteredNeighbours as Cell[], "state");
+    
   }
   
 }

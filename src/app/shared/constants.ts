@@ -12,7 +12,8 @@ export const CONDITION_LABELS={
   "IS": "Is",
   "DUMMY": "Always false",
   "TRUE": "Always true",
-  "RAND": "Random"
+  "RAND": "Random",
+  "MAJOR": "Majority"
 }
 
 export const DIRECTION_LABELS = {

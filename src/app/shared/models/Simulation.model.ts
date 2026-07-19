@@ -135,6 +135,21 @@ export default class Simulation {
       }else
 	throw new Error("validateProbability: Missing probability!");
     }
+
+    const validateMajority= (rule: Condition)=>{
+      validateAdjacency(rule);
+      validateState(rule);
+      if(rule.exclude){      
+	if(rule.excludeState){
+	  if(this.states.has(rule.excludeState)){
+	    return;
+	  } else
+	    throw new Error("validateMajority: Unknown state "+rule.excludeState);	
+	}else
+	  throw new Error("validateMajority: excluded state is missing for condition type "+rule.condition);
+      }
+    }
+
     
     validateCondition= (rule: Condition)=>{
       if(rule.condition){
@@ -171,6 +186,9 @@ export default class Simulation {
 	      break;
 	    case "RAND":
 	      validateProbability(rule);
+	      break;
+	    case "MAJOR":	      
+	      validateMajority(rule);
 	      break;
 	    case "DUMMY":
 	    case "TRUE":

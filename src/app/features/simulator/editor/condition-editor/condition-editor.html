@@ -109,6 +109,35 @@
         True with a probability of
         <input required type="number" min="0" max="1" [(ngModel)]="this.rule().probability" />
       </div> 
+      } @else if(this.rule().condition=="MAJOR") {
+      <div class="condition-statement">
+        <select class="condition-states"
+                required
+                [(ngModel)]="this.rule()._stateId"
+                (ngModelChange)="onStateChange($event)">
+          @for(s of this.getStates(); track $index){
+          <option [value]="s._id">{{s.name}}</option>
+          }
+        </select>
+        is majority among
+        <select required class="adjancy-options" [(ngModel)]="this.rule().adjacency">
+          <option value="MOORE">all neighbours</option>
+          <option value="MANHATTAN">adjacent neighbours</option>
+          <option value="DIAGONAL">diagonal neighbours</option>
+        </select>
+        
+        <label><input type="checkbox" [(ngModel)]="this.rule().exclude"> excluding state</label>
+        @if(this.rule().exclude){
+        <select class="exclude condition-states"
+                required
+                [(ngModel)]="this.rule()._excludeStateId"
+                (ngModelChange)="onExcludeStateChange($event)">
+          @for(s of this.getStates(); track $index){
+          <option [value]="s._id">{{s.name}}</option>
+          }
+        </select>
+        }
+      </div> 
       }
       
     @if(this.rule().children?.length &&

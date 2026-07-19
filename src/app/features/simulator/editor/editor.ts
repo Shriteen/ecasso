@@ -74,7 +74,6 @@ export class Editor implements OnInit {
     try{
       const tempStates : State[]= convertToStates(this.states);
       
-      
       this.simulationState()?.setRules(rules, tempStates);
       this.errorMode="success";      
       this.errorMessage=null;

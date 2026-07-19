@@ -80,4 +80,12 @@ export class ConditionEditor {
       this.rule().state = state.name;
     }
   }
+
+  onExcludeStateChange(stateId: string){
+    const state = this.getStates().find(s => s._id === stateId);
+
+    if (state) {
+      this.rule().excludeState = state.name;
+    }
+  }
 }
