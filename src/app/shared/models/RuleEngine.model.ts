@@ -82,6 +82,9 @@ export default class RuleEngine{
       }
       case "DUMMY":
 	break;
+      case "RAND":{
+	return Math.random() <= rule["probability"]!
+      }
       case undefined:
 	break;
       default:

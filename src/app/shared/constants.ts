@@ -11,7 +11,8 @@ export const CONDITION_LABELS={
   "IN": "In List",
   "IS": "Is",
   "DUMMY": "Always false",
-  "TRUE": "Always true"
+  "TRUE": "Always true",
+  "RAND": "Random"
 }
 
 export const DIRECTION_LABELS = {

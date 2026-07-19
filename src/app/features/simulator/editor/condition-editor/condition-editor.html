@@ -104,7 +104,12 @@
         </select>
         state
       </div> 
-    }
+      } @else if(this.rule().condition=="RAND") {
+      <div class="condition-statement">
+        True with a probability of
+        <input required type="number" min="0" max="1" [(ngModel)]="this.rule().probability" />
+      </div> 
+      }
       
     @if(this.rule().children?.length &&
       (this.rule().condition=="AND" || this.rule().condition=="OR")){

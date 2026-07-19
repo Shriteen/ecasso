@@ -125,6 +125,16 @@ export default class Simulation {
       }else
 	throw new Error("validateDirection: Missing direction!");
     }
+
+    const validateProbability= (rule: Condition)=>{
+      if(rule.probability){
+	if(rule.probability >= 0 && rule.probability<=1)
+	  return;
+	else
+	  throw new Error("validateProbability: Probability should be between 0 and 1");
+      }else
+	throw new Error("validateProbability: Missing probability!");
+    }
     
     validateCondition= (rule: Condition)=>{
       if(rule.condition){
@@ -158,6 +168,9 @@ export default class Simulation {
 	    case "IS":
 	      validateState(rule);
 	      validateDirection(rule);
+	      break;
+	    case "RAND":
+	      validateProbability(rule);
 	      break;
 	    case "DUMMY":
 	    case "TRUE":
