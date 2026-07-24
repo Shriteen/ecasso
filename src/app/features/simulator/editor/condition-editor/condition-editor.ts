@@ -38,6 +38,14 @@ export class ConditionEditor {
         this.rule()._stateId = state?._id;
       }
     }
+    //Initialize excludeStateId from text
+    if(this.rule().excludeState){
+      const state = this.getStates().find(s => s.name === this.rule().excludeState);
+
+      if (state) {
+        this.rule()._excludeStateId = state?._id;
+      }
+    }
   }
   
   addChildCondtion(){
