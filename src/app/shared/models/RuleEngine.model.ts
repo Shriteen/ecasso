@@ -1,5 +1,5 @@
 import Grid from "@core/Grid";
-import { getMostFrequentValue } from "@core/utils";
+import { getMostFrequentValues } from "@core/utils";
 import {
   VALID_ADJACENCY,
   VALID_DIRECTIONS,
@@ -176,8 +176,8 @@ export default class RuleEngine{
       neighbours.filter(s=>s).filter(s=> s?.state != rule.excludeState) :
       neighbours.filter(s=>s);
 
-    return rule.state === getMostFrequentValue(filteredNeighbours as Cell[], "state");
-    
+    const topValues= getMostFrequentValues(filteredNeighbours as Cell[], "state");
+    return topValues.length===1 && rule.state===topValues[0];    
   }
   
 }
