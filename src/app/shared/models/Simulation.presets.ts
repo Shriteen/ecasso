@@ -732,7 +732,260 @@ const PRESETS = {
     }
   },
 
-  
+  //Colors
+  colors: {
+    name: "Colors",
+    states: [
+      { name: "Red", color: "#e01b24", weight: 1 },
+      { name: "Orange", color: "#ff7800", weight: 0 },
+      { name: "Yellow", color: "#f6d32d", weight: 0 },
+      { name: "Green", color: "#33d17a", weight: 0 },
+      { name: "Blue", color: "#16d5ff", weight: 0 },
+      { name: "Indigo", color: "#0b199e", weight: 0 },
+      { name: "Violet", color: "#5b25ce", weight: 0 }
+    ],
+    rules: {
+      Red: {
+        Orange: {
+          condition: "RAND",
+          adjacency: "MOORE",
+          probability: 0.8
+        }
+      },
+      Orange: {
+        Yellow: {
+          adjacency: "MOORE",
+          condition: "RAND",
+          probability: 0.8
+        }
+      },
+      Yellow: {
+        Green: {
+          adjacency: "MOORE",
+          condition: "RAND",
+          probability: 0.8
+        }
+      },
+      Green: {
+        Blue: {
+          adjacency: "MOORE",
+          condition: "RAND",
+          probability: 0.8
+        }
+      },
+      Blue: {
+        Indigo: {
+          adjacency: "MOORE",
+          condition: "RAND",
+          probability: 0.8
+        }
+      },
+      Indigo: {
+        Violet: {
+          adjacency: "MOORE",
+          condition: "RAND",
+          probability: 0.8
+        }
+      },
+      Violet: {
+        Red: {
+          adjacency: "MOORE",
+          condition: "RAND",
+          probability: 0.8
+        }
+      }
+    },
+    options: {
+      cellSize: 10,
+      matrixWidth: 60,
+      matrixHeight: 70
+    }
+  },
+
+  //Immigration - Conway's Game of life with factions
+  immigration: {
+    name: "Immigration",
+    states: [{name:"default",color:"#ffffff",weight:80}, {name:"Red",color:"#ed333b",weight:10}, {name:"Blue",color:"#3584e4",weight:10}],
+    rules: {
+      default: {
+	Red: {
+	  condition: "AND",
+	  children: [
+	    { condition: "EQ", adjacency: "MOORE", state: "default", value: 5 },
+	    { condition: "MAJOR", adjacency: "MOORE", state: "Red", exclude: true, excludeState: "default" }
+	  ]
+	},
+	Blue: {
+	  condition: "AND",
+	  children: [
+	    { condition: "EQ", adjacency: "MOORE", state: "default", value: 5 },
+	    { condition: "MAJOR", adjacency: "MOORE", state: "Blue", exclude: true, excludeState: "default" }
+	  ]
+	}
+      },
+      Red: {
+	default: {
+	  condition: "OR",
+	  children: [
+	    { condition: "GT", adjacency: "MOORE", state: "default", value: 6 },
+	    { condition: "LT", adjacency: "MOORE", state: "default", value: 5 }
+	  ]
+	}
+      },
+      Blue: {
+	default: {
+	  condition: "OR",
+	  children: [
+	    { condition: "GT", adjacency: "MOORE", state: "default", value: 6 },
+	    { condition: "LT", adjacency: "MOORE", state: "default", value: 5 }
+	  ]
+	}
+      }
+    },
+    options: {
+      cellSize: 10,
+      matrixWidth: 60,
+      matrixHeight: 70
+    }
+  },
+
+  //QuadLife - Conway's Game of life with 4 factions
+  quadlife: {
+    name: "QuadLife",
+    states: [
+      {name:"default", color:"#ffffff", weight:60},
+      {name:"Red", color:"#e01b24", weight:10},
+      {name:"Green", color:"#33d17a", weight:10},
+      {name:"Blue", color:"#3584e4", weight:10},
+      {name:"Yellow", color:"#f6d32d", weight:10}
+    ],
+    rules: {
+      default: {
+	Red: {
+	  condition: "AND",
+	  children: [
+            { condition:"EQ", adjacency:"MOORE", state:"default", value:5 },
+            {
+              condition:"OR",
+              children:[
+		{ condition:"MAJOR", adjacency:"MOORE", state:"Red" , exclude:true, excludeState:"default"},
+		{
+		  condition:"AND",
+		  children:[
+                    { condition:"EQ", adjacency:"MOORE", state:"Green", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Blue", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Yellow", value:1 }
+		  ]
+		}
+              ]
+            }
+	  ]
+	},
+	Green: {
+	  condition: "AND",
+	  children: [
+            { condition:"EQ", adjacency:"MOORE", state:"default", value:5},
+            {
+              condition:"OR",
+              children:[
+		{ condition:"MAJOR", adjacency:"MOORE", state:"Green" , exclude:true, excludeState:"default"},
+		{
+		  condition:"AND",
+		  children:[
+                    { condition:"EQ", adjacency:"MOORE", state:"Red", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Blue", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Yellow", value:1 }
+		  ]
+		}
+              ]
+            }
+	  ]
+	},
+	Blue: {
+	  condition: "AND",
+	  children: [
+            { condition:"EQ", adjacency:"MOORE", state:"default", value:5 },
+            {
+              condition:"OR",
+              children:[
+		{ condition:"MAJOR", adjacency:"MOORE", state:"Blue", exclude:true, excludeState:"default" },
+		{
+		  condition:"AND",
+		  children:[
+                    { condition:"EQ", adjacency:"MOORE", state:"Red", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Green", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Yellow", value:1 }
+		  ]
+		}
+              ]
+            }
+	  ]
+	},
+	Yellow: {
+	  condition: "AND",
+	  children: [
+            { condition:"EQ", adjacency:"MOORE", state:"default", value:5 },
+            {
+              condition:"OR",
+              children:[
+		{ condition:"MAJOR", adjacency:"MOORE", state:"Yellow",exclude:true, excludeState:"default" },
+		{
+		  condition:"AND",
+		  children:[
+                    { condition:"EQ", adjacency:"MOORE", state:"Red", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Green", value:1 },
+                    { condition:"EQ", adjacency:"MOORE", state:"Blue", value:1 }
+		  ]
+		}
+              ]
+            }
+	  ]
+	}
+      },
+      Red: {
+	default: {
+	  condition:"OR",
+	  children:[
+            { condition:"GT", adjacency:"MOORE", state:"default", value:6 },
+            { condition:"LT", adjacency:"MOORE", state:"default", value:5 }
+	  ]
+	}
+      },
+      Green: {
+	default: {
+	  condition:"OR",
+	  children:[
+            { condition:"GT", adjacency:"MOORE", state:"default", value:6 },
+            { condition:"LT", adjacency:"MOORE", state:"default", value:5 }
+	  ]
+	}
+      },
+      Blue: {
+	default: {
+	  condition:"OR",
+	  children:[
+            { condition:"GT", adjacency:"MOORE", state:"default", value:6 },
+            { condition:"LT", adjacency:"MOORE", state:"default", value:5 }
+	  ]
+	}
+      },
+      Yellow: {
+	default: {
+	  condition:"OR",
+	  children:[
+            { condition:"GT", adjacency:"MOORE", state:"default", value:6 },
+            { condition:"LT", adjacency:"MOORE", state:"default", value:5 }
+	  ]
+	}
+      }
+    },
+    options: {
+      cellSize: 10,
+      matrixWidth: 60,
+      matrixHeight: 70
+    }
+  },
+
   
 } as const satisfies Record<string, Preset>;
 
