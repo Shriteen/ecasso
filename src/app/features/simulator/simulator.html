@@ -1,13 +1,15 @@
 <div class="simulator">
   <div class="top-bar">
-    <button routerLink="/" class="back-btn">Back</button>
-    <span class="title">{{this.name}}</span>
-    <div class="view-selector">
-      <label><input type="radio" [(ngModel)]="this.viewType" value="EDITOR">Edit</label>
-      @if(!isMobile()){      
+    <div> <button routerLink="/" class="back-btn">Back</button></div>
+    <div class="title">{{this.name}}</div>
+    <div>
+      <div class="view-selector">
+        <label><input type="radio" [(ngModel)]="this.viewType" value="EDITOR">Edit</label>
+        @if(!isMobile()){      
         <label><input type="radio" [(ngModel)]="this.viewType" value="SPLIT">Combined</label>
-      }
-      <label><input type="radio" [(ngModel)]="this.viewType" value="VIEWER">View</label>
+        }
+        <label><input type="radio" [(ngModel)]="this.viewType" value="VIEWER">View</label>
+      </div>
     </div>
   </div>
 

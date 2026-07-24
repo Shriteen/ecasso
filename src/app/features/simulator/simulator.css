@@ -11,7 +11,23 @@
 .top-bar{
     border-bottom: 1px solid #555;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+.top-bar>*{
+    flex: 1;
+}
+.title{
+    text-align: center;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.view-selector{
+    text-align: right;
+}
+
 .main-view.viewer Editor{
     display: none;
 }
