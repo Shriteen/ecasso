@@ -4,7 +4,8 @@
       <div class="states-list">
       @for(state of this.states; track state._id; let i = $index){
       <button [class]="i==selectedStateIndex?'active':'inactive'"
-              (click)="this.selectState(i)">{{state.name}}</button>
+              (click)="this.selectState(i)"
+              [style.--color]="state.color" >{{state.name}}</button>
       }
       </div>
       <button class="add-state-button" (click)="this.addState()">Add +</button>
