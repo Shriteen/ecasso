@@ -8,10 +8,11 @@ import { JsonPipe } from "@angular/common";
 import { ToStateEditor } from "./to-state-editor/to-state-editor";
 import { ALL_STATES } from "./editor.token";
 import { SimulationService } from "@shared/services/simulation-service";
+import { LucideTrash2, LucidePlus } from '@lucide/angular';
 
 @Component({
   selector: "editor",
-  imports: [FormsModule, JsonPipe, ToStateEditor],
+  imports: [FormsModule, JsonPipe, ToStateEditor, LucideTrash2, LucidePlus],
   templateUrl: "./editor.html",
   styleUrl: "./editor.css",
   providers: [

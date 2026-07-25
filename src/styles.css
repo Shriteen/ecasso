@@ -1,3 +1,62 @@
 body{
     margin: 0;
 }
+
+.to-state-container input{
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    border: none;
+}
+
+.to-state-container select{
+    background: #a0a0ef80;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    max-width: 10em;
+}
+.to-state-container select:hover{
+    background: #a0a0efd0;
+}
+
+.to-state-container .toggle-group{
+    background: #a0a0ef80;
+    padding: 0.5em;
+    border-radius: 5px;    
+}
+.to-state-container .toggle-group button{
+    background: none;
+    border-radius: 5px;
+    border: none;
+    padding: 0.1em 0.5em;    
+}
+.to-state-container .toggle-group button:hover{
+    background: #a0a0efd0;    
+}
+
+.to-state-container .toggle-group button.selected{
+    border: 2px solid #8a0aff;
+}
+
+.to-state-container input[type="checkbox"]{
+    appearance: none;
+    background: #a0a0ef80;
+    aspect-ratio: 1;
+    vertical-align: center;
+    position: relative;
+}
+.to-state-container input[type="checkbox"]:checked{
+    background: #a0a0efd0;
+}
+.to-state-container input[type="checkbox"]::before{
+    content: " ";
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.to-state-container input[type="checkbox"]:checked::before{
+    content: "✓";
+    display: grid;
+    place-items: center;
+    inset: 0;
+}

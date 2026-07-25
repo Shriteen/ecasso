@@ -8,7 +8,9 @@
               [style.--color]="state.color" >{{state.name}}</button>
       }
       </div>
-      <button class="add-state-button" (click)="this.addState()">Add +</button>
+      <button class="add-state-button" (click)="this.addState()">
+        <svg lucidePlus size="30"></svg>
+      </button>
     </div>
     @if (selectedStateIndex!=null?this.states[selectedStateIndex]:null; as state){
     <div class="state-details">
@@ -22,7 +24,9 @@
           <label class="weight">Initial Population Weight <input type="number" min="0"  [(ngModel)]="state.weight"></label>
         </fieldset>          
       </div>
-      <button (click)="this.deleteState(state._id)">Delete</button>
+      <button class="delete-btn" (click)="this.deleteState(state._id)">
+        <svg lucideTrash2 color="#f67373"></svg>
+      </button>
     </div>
     <div class="to-state">
       @for(state of this.states[selectedStateIndex!].rules; track state._id; let i = $index){
@@ -30,7 +34,9 @@
                            [availableStates]="this.getAvailableToStates(selectedStateIndex)"
                            (deleted)="this.deleteToStateRule($event)"/>
       }
-      <button class="add-target-state-button" (click)="this.addToStateRule()">Add +</button>
+      <button class="add-target-state-button" (click)="this.addToStateRule()">
+        <svg lucidePlus size="30"></svg>
+      </button>
     </div>
     }
     @if(this.errorMode=="fail"){

@@ -6,16 +6,20 @@
               required
               [(ngModel)]="this.rule().condition"
               (ngModelChange)="onConditionChange($event)">
-        @for(c of this.CONDITION_LABELS | keyvalue; track $index){
+        @for(c of this.CONDITION_LABELS | keyvalue : originalOrder ; track $index){
           <option [value]="c.key">{{c.value}}</option>
         }
       </select>
       @if(this.rule().condition=="AND" || this.rule().condition=="OR"){
-        <button class="add-child-condition-button" (click)="this.addChildCondtion()">+ condtions</button>
+      <button class="add-child-condition-button" (click)="this.addChildCondtion()">
+        <svg lucideSquarePlus></svg>
+      </button>
       }
 
       @if(this.level()>0){
-        <button class="delete-condition-button" (click)="this.deleteCondtion()">Delete</button>
+      <button class="delete-condition-button" (click)="this.deleteCondtion()">
+        <svg lucideTrash2></svg>
+      </button>
       }
     </div>
       

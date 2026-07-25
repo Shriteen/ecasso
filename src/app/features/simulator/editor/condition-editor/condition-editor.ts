@@ -6,10 +6,11 @@ import { CONDITION_LABELS, CONDITION_OFFSET, DIRECTION_LABELS } from "@shared/co
 import { KeyValuePipe } from "@angular/common";
 import { ALL_STATES } from "../editor.token";
 import { ToggleGroupButtons } from "@core/toggle-group-buttons/toggle-group-buttons";
+import { LucideSquarePlus, LucideTrash2 } from '@lucide/angular';
 
 @Component({
   selector: "condition-editor",
-  imports: [FormsModule, KeyValuePipe, ToggleGroupButtons],
+  imports: [FormsModule, KeyValuePipe, ToggleGroupButtons, LucideSquarePlus, LucideTrash2],
   templateUrl: "./condition-editor.html",
   styleUrl: "./condition-editor.css",
 })
@@ -21,7 +22,7 @@ export class ConditionEditor {
   
   readonly CONDITION_LABELS=CONDITION_LABELS;
   readonly DIRECTION_LABELS=DIRECTION_LABELS;
-  readonly indent= CONDITION_OFFSET
+  readonly indent= CONDITION_OFFSET;
 
   getStates= inject(ALL_STATES);
 
@@ -47,6 +48,8 @@ export class ConditionEditor {
       }
     }
   }
+
+  originalOrder = () => 0;
   
   addChildCondtion(){
     //Ensure children array

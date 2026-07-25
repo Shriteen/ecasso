@@ -78,7 +78,6 @@ button.add-state-button.add-state-button:hover{
 .to-state{
     display: flex;
     flex-direction: column;
-    margin: 1em;
     gap: 1em;
 }
 .state-details-basic input{
@@ -103,6 +102,7 @@ button.add-state-button.add-state-button:hover{
     width: 2.5em;
     height: 2.5em;
     margin: 0 1em;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 ::-webkit-color-swatch,::-moz-color-swatch {
     border: none ;
@@ -112,6 +112,24 @@ button.add-state-button.add-state-button:hover{
 }
 
 
+.delete-btn{
+    background: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1em;
+}
+.delete-btn:hover{
+    background: rgba(0,0,0,0.1);
+}
+
+.add-target-state-button{
+    background-color: #e0e0ff;
+    border: none;
+    border-radius: 10px;
+}
+.add-target-state-button:hover{
+    background-color: #a0a0ef80;
+}
 
 @media screen and (min-width:768px){
     .editing-area{

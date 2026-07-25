@@ -3,10 +3,11 @@ import { JsonPipe } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { StateUI, ToStateRulesUI } from "../ui-adapter";
 import { ConditionEditor } from "../condition-editor/condition-editor";
+import { LucideChevronsDownUp, LucideChevronsUpDown, LucideTrash2 } from "@lucide/angular";
 
 @Component({
   selector: "app-to-state-editor",
-  imports: [JsonPipe, FormsModule, ConditionEditor],
+  imports: [JsonPipe, FormsModule, ConditionEditor, LucideChevronsDownUp, LucideChevronsUpDown, LucideTrash2],
   templateUrl: "./to-state-editor.html",
   styleUrl: "./to-state-editor.css",
 })

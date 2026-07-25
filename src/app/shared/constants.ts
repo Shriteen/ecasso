@@ -27,4 +27,4 @@ export const DIRECTION_LABELS = {
   "BR": "Bottom Right"
 }
 
-export const CONDITION_OFFSET= 30;
+export const CONDITION_OFFSET= 15;
