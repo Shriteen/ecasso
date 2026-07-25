@@ -13,11 +13,14 @@
     @if (selectedStateIndex!=null?this.states[selectedStateIndex]:null; as state){
     <div class="state-details">
       <div class="state-details-basic">
-        <label>Name: <input type="text" [(ngModel)]="state.name"></label>
-        <label>Color: <input type="color" [(ngModel)]="state.color"></label>
-      </div>
-      <div class="state-details-bg">
-        <label>Initial Population Weight: <input type="number" min="0"  [(ngModel)]="state.weight"></label>
+        <fieldset class="state-name">
+          <label>Name</label>
+          <input type="text" [(ngModel)]="state.name">
+        </fieldset>
+        <fieldset class="state-info">
+          <label>Color<input type="color" [(ngModel)]="state.color"></label>
+          <label class="weight">Initial Population Weight <input type="number" min="0"  [(ngModel)]="state.weight"></label>
+        </fieldset>          
       </div>
       <button (click)="this.deleteState(state._id)">Delete</button>
     </div>

@@ -7,6 +7,7 @@
 
 .editing-area{
     overflow: scroll;
+    margin: 0.5em;
 }
 
 .errors{
@@ -54,20 +55,66 @@ button.add-state-button.add-state-button:hover{
 
 .state-details{
     display: flex;
-    margin: 1rem;
+    margin: 1rem 0;
+    font-size: 0.8em;
 }
 .state-details>div{
     display: flex;
     flex-direction: column;
     flex: 1;
 }
-.state-details-bg button{
-    width: min-content;
-}
 
+.state-details-basic fieldset{
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+.state-info>*{
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
 .to-state{
     display: flex;
     flex-direction: column;
     margin: 1em;
     gap: 1em;
 }
+.state-details-basic input{
+    border-radius: 5px;
+    border: 0.5px solid grey; 
+}
+.state-name{
+    display: flex;
+}
+.state-name input{
+    flex: 1;
+    height: 2em;
+}
+.weight input{
+    max-width: 4em;
+    margin: 0 1em;
+    height: 2em;
+}
+.state-details-basic input[type="color"]{
+    border: none;
+    padding: 0;
+    width: 2.5em;
+    height: 2.5em;
+    margin: 0 1em;
+}
+::-webkit-color-swatch,::-moz-color-swatch {
+    border: none ;
+}
+.state-details-basic fieldset>*{
+    margin: 0.25em;
+}
+
+
+
+@media screen and (min-width:768px){
+    .editing-area{
+	margin: 1em;
+    }
+} 
