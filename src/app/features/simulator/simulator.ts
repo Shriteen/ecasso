@@ -9,10 +9,12 @@ import { ModalService } from "@core/modal/ModalService";
 import { SaveDialog } from "./save-dialog/save-dialog";
 import { JsonPipe } from "@angular/common";
 import { RevertDialog } from "./revert-dialog/revert-dialog";
+import { LucideEye, LucideSquareSplitHorizontal, LucidePencil, LucideMoveLeft } from "@lucide/angular";
 
 @Component({
   selector: "simulator",
-  imports: [Editor,Viewer, FormsModule, RouterLink, JsonPipe],
+  imports: [Editor,Viewer, FormsModule, RouterLink, JsonPipe,
+    LucideEye, LucideSquareSplitHorizontal, LucidePencil, LucideMoveLeft],
   templateUrl: "./simulator.html",
   styleUrl: "./simulator.css",
 })

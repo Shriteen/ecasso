@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, effect, EventEmitter, inject, input, OnInit, output, Output, signal } from "@angular/core";
+import { afterNextRender, ChangeDetectorRef, Component, computed, effect, ElementRef, EventEmitter, inject, Injector, input, OnInit, output, Output, signal, ViewChild } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import Simulation from "@shared/models/Simulation.model";
 import { TransitionFromRule, TransitionToRule, State } from "@shared/types";
@@ -8,11 +8,13 @@ import { JsonPipe } from "@angular/common";
 import { ToStateEditor } from "./to-state-editor/to-state-editor";
 import { ALL_STATES } from "./editor.token";
 import { SimulationService } from "@shared/services/simulation-service";
-import { LucideTrash2, LucidePlus } from '@lucide/angular';
+import { LucideTrash2, LucidePlus, LucideHammer, LucideSave, LucideUndo2, LucideCircleX, LucideCircleCheck  } from '@lucide/angular';
 
 @Component({
   selector: "editor",
-  imports: [FormsModule, JsonPipe, ToStateEditor, LucideTrash2, LucidePlus],
+  imports: [FormsModule, JsonPipe, ToStateEditor,
+    LucideTrash2, LucidePlus, LucideHammer, LucideSave,
+    LucideUndo2, LucideCircleX, LucideCircleCheck],
   templateUrl: "./editor.html",
   styleUrl: "./editor.css",
   providers: [
@@ -38,8 +40,11 @@ export class Editor implements OnInit {
 
   saved= output<void>();
   reverted= output<void>();
+
+  @ViewChild('messageDiv')
+  private messageDiv?: ElementRef<HTMLDivElement>;
   
-  constructor(private cdr: ChangeDetectorRef){
+  constructor(private cdr: ChangeDetectorRef, private injector: Injector){
 
     effect(() => {
       this.states = simulationToStateUIarray(this.simulationState());
@@ -69,6 +74,13 @@ export class Editor implements OnInit {
       this.errorMode="fail";
       this.errorMessage=e.message;
     }
+
+    afterNextRender(
+      () => {
+        this.messageDiv?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start'});
+      },
+      { injector: this.injector }
+    );
   }
 
   compile(rules: TransitionFromRule){

@@ -40,16 +40,28 @@
     </div>
     }
     @if(this.errorMode=="fail"){
-    <div class="errors">{{this.errorMessage}}</div>
+    <div class="errors message" #messageDiv>
+      {{this.errorMessage}}
+      <svg lucideCircleX color="#ff5a5a"></svg>      
+    </div>
     }@else if(this.errorMode=="success"){
-    <div class="success">Rules Updated Successfully!</div>
+    <div class="success message" #messageDiv>
+      Rules Updated Successfully!
+      <svg lucideCircleCheck color="#4bcb59"></svg>
+    </div>
     }
   </div>
   <div class="button-bar">
-    <button class="compile-btn" (click)="this.compileRules()">Compile</button>
-    <button class="save-btn" (click)="this.saved.emit()">Save</button>
+    <button class="compile-btn" (click)="this.compileRules()">
+      <svg lucideHammer></svg>Compile
+    </button>
+    <button class="save-btn" (click)="this.saved.emit()">
+      <svg lucideSave></svg>Save
+    </button>
     @if(this.persistedSimulation()){
-      <button class="revert-btn" (click)="this.reverted.emit()">Revert</button>
+    <button class="revert-btn" (click)="this.reverted.emit()">
+      <svg lucideUndo2></svg>Revert
+    </button>
     }
   </div>
 </div>

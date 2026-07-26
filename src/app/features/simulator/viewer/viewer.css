@@ -19,4 +19,39 @@
 .button-bar{
     display: flex;
     justify-content: space-between;
+    background-color: white;    
+}
+
+.button-bar{
+    display: flex;
+    gap: 0.5em;
+    padding: 0.2em 0.2em 0 0.2em;
+}
+.button-bar button{
+    line-height: 2.5em;
+    background-color: #e0e0ff;
+    border: none;
+    border-radius: 5px;
+    padding: 0 0.2em;
+}
+.button-bar button:hover{
+    background-color: #a0a0ef80;    
+}
+.button-bar svg{
+    baseline-shift: center;
+    margin: 0 0.25em;
+}
+
+.player-controls{
+    display: flex;
+    gap: 0.25em;
+}
+.speed-control{
+    line-height: 2.5em;
+    background-color: #e0e0ff;
+    border: none;
+    border-radius: 5px;
+}
+.speed-control:hover{
+    background-color: #a0a0ef80;    
 }

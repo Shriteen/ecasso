@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, effect, ElementRef, input, ViewChild } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import Simulation from "@shared/models/Simulation.model";
+import { LucidePlay, LucidePause, LucideStepForward, LucideZoomIn, LucideZoomOut, LucideShuffle } from '@lucide/angular';
 
 @Component({
   selector: "viewer",
-  imports: [FormsModule],
+  imports: [FormsModule, LucidePlay, LucidePause, LucideStepForward, LucideZoomIn, LucideZoomOut, LucideShuffle],
   templateUrl: "./viewer.html",
   styleUrl: "./viewer.css",
 })

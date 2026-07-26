@@ -1,14 +1,27 @@
 <div class="simulator">
   <div class="top-bar">
-    <div> <button routerLink="/" class="back-btn">Back</button></div>
+    <div><button routerLink="/" class="back-btn">
+      <svg lucideMoveLeft></svg>
+    </button></div>
     <div class="title">{{this.name}}</div>
     <div>
       <div class="view-selector">
-        <label><input type="radio" [(ngModel)]="this.viewType" value="EDITOR">Edit</label>
+        <label>
+          <svg lucidePencil></svg>
+          {{!isMobile()?"Edit":""}}
+          <input type="radio" [(ngModel)]="this.viewType" value="EDITOR">
+        </label>
         @if(!isMobile()){      
-        <label><input type="radio" [(ngModel)]="this.viewType" value="SPLIT">Combined</label>
+        <label>
+          <svg lucideSquareSplitHorizontal></svg> Split
+          <input type="radio" [(ngModel)]="this.viewType" value="SPLIT">
+        </label>
         }
-        <label><input type="radio" [(ngModel)]="this.viewType" value="VIEWER">View</label>
+        <label>
+          <svg lucideEye></svg>
+          {{!isMobile()?"Preview":""}}          
+          <input type="radio" [(ngModel)]="this.viewType" value="VIEWER">
+        </label>
       </div>
     </div>
   </div>

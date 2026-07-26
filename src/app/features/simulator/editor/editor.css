@@ -2,7 +2,6 @@
     display: grid;
     grid-template-rows: 1fr 2.5em;
     height: calc(100vh - 2.5em); /*2.5em is from top bar*/
-    border-right: 2px solid #555;
 }
 
 .editing-area{
@@ -16,6 +15,17 @@
 
 .success{
     background-color: rgba(90, 255, 90, 0.3);
+}
+
+.message{
+    margin: 1em 0;
+    padding: 1em;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.message svg{
+    baseline-shift: center;
 }
 
 .states .active{
@@ -129,6 +139,26 @@ button.add-state-button.add-state-button:hover{
 }
 .add-target-state-button:hover{
     background-color: #a0a0ef80;
+}
+
+.button-bar{
+    display: flex;
+    gap: 0.5em;
+    padding: 0 1em;
+}
+.button-bar button{
+    line-height: 2.5em;
+    background-color: #e0e0ff;
+    border: none;
+    border-radius: 5px;
+    padding: 0 0.5em;
+}
+.button-bar button:hover{
+    background-color: #a0a0ef80;    
+}
+.button-bar svg{
+    baseline-shift: center;
+    margin: 0 0.25em;
 }
 
 @media screen and (min-width:768px){

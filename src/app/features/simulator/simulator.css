@@ -9,10 +9,11 @@
     grid-template-columns: 1fr 1fr;
 }
 .top-bar{
-    border-bottom: 1px solid #555;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 0 5px gray;
+    z-index: 1;
 }
 .top-bar>*{
     flex: 1;
@@ -23,9 +24,30 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    font-weight: bold;
 }
+
 .view-selector{
     text-align: right;
+}
+.view-selector label,.back-btn{
+    background: #eee;
+    padding: 0.3em 0.5em;
+    vertical-align: center;
+    border: none;
+}
+.view-selector label:hover , .back-btn:hover{
+    background: #ddd;
+}
+.view-selector label:has(input:checked){
+    background: #ccc;
+}
+.view-selector input{
+    appearance: none;
+    margin: 0;
+}
+.view-selector svg{
+    baseline-shift: center;
 }
 
 .main-view.viewer Editor{

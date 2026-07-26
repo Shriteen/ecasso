@@ -9,9 +9,13 @@
   <div class="button-bar">
     <div class="player-controls">
       @if(this.playState=="running"){
-        <button class="pause-btn" (click)="this.pause()">Pause</button>
+      <button class="pause-btn" (click)="this.pause()">
+        <svg lucidePause></svg>
+      </button>
       }@else{    
-        <button class="play-btn" (click)="this.play()">Play</button>
+      <button class="play-btn" (click)="this.play()">
+        <svg lucidePlay></svg>
+      </button>
       }
 
       <select class="speed-control"
@@ -22,17 +26,25 @@
         }
       </select>  
       
-      <button class="step-btn" (click)="this.step()">Step</button>
+      <button class="step-btn" (click)="this.step()">
+        <svg lucideStepForward></svg>
+      </button>
     </div>
 
     <div class="board-controls">
-      <button class="reset-btn" (click)="this.reset()">Reset</button>
+      <button class="reset-btn" (click)="this.reset()">
+        <svg lucideShuffle></svg>
+      </button>
     </div>
 
     <div class="zoom-controls">  
-      <button class="zoom-in-btn" (click)="this.zoomIn(1.25)">Zoom +</button>
+      <button class="zoom-in-btn" (click)="this.zoomIn(1.25)">
+        <svg lucideZoomIn></svg>
+      </button>
       <button class="zoom-reset-btn" (click)="this.zoomReset()">{{(this.zoom*100).toFixed(2)}}%</button>
-      <button class="zoom-out-btn" (click)="this.zoomOut(0.8)">Zoom -</button>
+      <button class="zoom-out-btn" (click)="this.zoomOut(0.8)">
+        <svg lucideZoomOut></svg>
+      </button>
     </div>
   </div>
 </div>
