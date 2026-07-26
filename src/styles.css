@@ -60,3 +60,23 @@ body{
     place-items: center;
     inset: 0;
 }
+
+.modal-container button{
+    background: #eee;
+    border: none;
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+.modal-container button:hover{
+    background: #ccc;
+}
+.modal-container{
+    font-size: 1.2rem;
+}
+.modal-container .buttons{
+}
+.modal-container>*>div{
+    padding: 0.5em;
+}

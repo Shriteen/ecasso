@@ -13,3 +13,18 @@
     display: flex;
     justify-content: center;
 }
+
+label{
+    font-size: 1rem;
+}
+
+select{
+    background: #eee;
+    border: none;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 5px;
+}
+select:hover{
+    background: #ccc;
+}

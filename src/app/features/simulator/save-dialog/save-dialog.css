@@ -9,6 +9,13 @@
     justify-content: center;
 }
 
+.name-input{
+    margin: 1em;
+}
+.name-input input{
+    margin: 0 1em;
+}
+
 .buttons, .name-input{
     display: flex;
     justify-content: center;

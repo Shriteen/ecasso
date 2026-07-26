@@ -1,12 +1,12 @@
 <div class="save-dialog">
-    <label class="name-input">Name: <input [(ngModel)]="this.name" required /></label>
+    <label class="name-input">Name<input [(ngModel)]="this.name" required /></label>
     <div class="buttons">
+      <button (click)="this.modalService.close()">Cancel</button>
       @if(this.saved==false || this.name?.trim()==this.originalName ){
         <button (click)="this.save()" [disabled]="this.name===''">Save</button>
       }@else{
         <button (click)="this.save()" [disabled]="this.name===''">Rename</button>
         <button (click)="this.saveAsCopy()" [disabled]="this.name===''">Save Copy</button>
       }
-      <button (click)="this.modalService.close()">Cancel</button>
     </div>
 </div>
