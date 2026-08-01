@@ -1,0 +1,33 @@
+.help-dialog{
+    background: white;
+    min-width: 30vw;
+    min-height: 20vh;
+    max-width: 80vw;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #0004;
+}
+
+.content{
+    max-height: 75vh;
+    overflow: scroll;
+}
+
+dt{
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 768px){
+    .content{
+	padding: 1.5em;
+    }
+} 

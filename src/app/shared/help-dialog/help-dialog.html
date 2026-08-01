@@ -1,0 +1,79 @@
+<div class="help-dialog">
+  <div class="content">
+    <h1>Cellular Automata</h1>
+    <p>Cellular automata are systems of cells on a grid that evolve over time according to local rules. Each cell's next state depends on its current state and its neighbors, allowing simple rules to generate rich and complex behavior.</p>
+    <h2>Editor Usage</h2>
+    <h3>States</h3>
+    <p>Cell states are displayed as colored squares at the top of the editor. Click any state to modify its properties, such as its name and color.</p> 
+    <p>Initial Population Weight determines the relative likelihood that a cell will be initialized in this state. Only the weights relative to one another matter. For example, if all states have the same weight—regardless of its value—the initial population will be distributed uniformly among them.</p>
+    <h3>Transition-To Rules</h3>
+    <p>The state being edited is the source state. You can add one or more transition-to rules, each specifying a target state and the condition under which a cell transitions from the source state to that target state. If multiple rules match simultaneously, the resulting behavior is undefined. To avoid ambiguity, ensure that your rules are mutually exclusive.</p>
+    <h3>Conditions</h3>
+    <dl>
+
+      <dt>And, Or</dt>
+      <dd>
+        Use these conditions to combine multiple conditions with logical AND or OR. Click the + icon to add subconditions. Subconditions can themselves contain AND or OR groups, making it possible to build complex nested conditions.
+      </dd>
+
+      <dt>Equals, Not Equals, Less Than, Less Than or Equal To, Greater Than, Greater Than or Equal To</dt>
+      <dd>
+        Compare the number of neighboring cells in a selected state against a specified count. Choose whether to count all, adjacent, or diagonal neighbors. The count can range from 0 to 4 or 8 depending on the selected neighbor type.
+      </dd>
+
+      <dt>Between</dt>
+      <dd>
+        Checks whether the number of neighboring cells in a selected state falls within a specified range. The minimum and maximum values are inclusive. Choose whether to count all, adjacent, or diagonal neighbors. The count can range from 0 to 4 or 8 depending on the selected neighbor type.
+      </dd>
+
+      <dt>In List</dt>
+      <dd>
+        Checks whether the number of neighboring cells in a selected state matches one of the specified values. Choose whether to count all, adjacent, or diagonal neighbors. The values can range from 0 to 4 or 8 depending on the selected neighbor type.
+      </dd>
+
+      <dt>Is</dt>
+      <dd>
+        Checks whether the cell in a specified direction is in the selected state. Choose a direction and a state to test the neighboring cell at that position.
+      </dd>
+
+      <dt>Always True, Always False</dt>
+      <dd>
+        Conditions that are always satisfied or never satisfied. Use these to create transitions that always occur or to disable a transition without removing the rule.
+      </dd>
+
+      <dt>Random</dt>
+      <dd>
+        Returns true with the specified probability. The probability value must be between 0 and 1, where 0 always returns false and 1 always returns true.
+      </dd>
+
+      <dt>Majority</dt>
+      <dd>
+        Checks whether a selected state is the majority among the specified neighbors. Choose the neighbor type to compare, and optionally exclude a state from the calculation. Excluding a passive state can be useful when only meaningful or active states should influence the majority decision.
+      </dd> 
+    </dl>
+
+    <h3>Compilation</h3>
+    <p>Use the Compile button to apply your changes. Before updating the simulator, the compiler validates the rules and reports any errors found.</p>
+
+    <h2>Viewer Usage</h2>
+    <p>Use the Play/Pause controls to start or stop the simulation. The simulation speed can be adjusted to control how quickly generations advance. Use the Step button to manually advance the simulation by exactly one step at a time, which is useful for observing changes in detail.</p>
+    <p>Use the Shuffle (Reset) button to reinitialize the world. This discards the current cell configuration and creates a new initial state based on the initial population weights defined for each state. This action cannot be undone and there is no confirmation prompt, so save the simulation first if you want to preserve the current state.</p>
+    <p>Adjust the zoom level between 30% and 1000% using the zoom controls. Pinch-to-zoom gestures and Ctrl+scroll are also supported. Click the zoom percentage to reset it to 100%.</p>
+
+    <h2>Saving, Import/Export and Presets</h2>
+    <p>Simulations created during a session are temporary and will be lost if the page is refreshed unless they are saved.</p>
+    <p>Click the <b>Save</b> button to persist the current simulation. If the simulation has already been saved, you can overwrite the existing version, or change its name and choose whether to rename the saved simulation or save it as a new copy. Saving stores the states, their transition rules, and the current world state.</p>
+    <p>Saved simulations are stored locally in your browser. They are not synchronized and cannot be accessed from other browsers or devices.</p>
+    <p>If the simulation has been saved, the <b>Revert</b> button becomes available. Clicking it discards all unsaved changes and restores the last saved version.</p>
+    <p>The <b>Export</b> button on the home screen downloads the simulation as a JSON file. This is useful for creating backups or sharing simulations between browsers, devices, or other users.</p>
+    <p>Use the <b>Import</b> button on the home screen to load a previously exported JSON file. Imported simulations can then be edited and saved like any other simulation.</p>
+
+    <p>
+      When creating a new simulation, you can start with a blank Untitled simulation or choose from a list of presets. Some presets recreate well-known cellular automata, while others demonstrate the capabilities of the simulator and its rule system. They can be used as a starting point for your own simulations or as a source of reference and inspiration.
+    </p>
+
+  </div>
+  <div class="buttons">
+    <button (click)="this.modalService.close()">Exit</button>
+  </div>
+</div>

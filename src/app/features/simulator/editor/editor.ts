@@ -8,13 +8,15 @@ import { JsonPipe } from "@angular/common";
 import { ToStateEditor } from "./to-state-editor/to-state-editor";
 import { ALL_STATES } from "./editor.token";
 import { SimulationService } from "@shared/services/simulation-service";
-import { LucideTrash2, LucidePlus, LucideHammer, LucideSave, LucideUndo2, LucideCircleX, LucideCircleCheck  } from '@lucide/angular';
+import { LucideTrash2, LucidePlus, LucideHammer, LucideSave, LucideUndo2, LucideCircleX, LucideCircleCheck, LucideCircleQuestionMark  } from '@lucide/angular';
+import { ModalService } from "@core/modal/ModalService";
+import { HelpDialog } from "@shared/help-dialog/help-dialog";
 
 @Component({
   selector: "editor",
   imports: [FormsModule, JsonPipe, ToStateEditor,
     LucideTrash2, LucidePlus, LucideHammer, LucideSave,
-    LucideUndo2, LucideCircleX, LucideCircleCheck],
+    LucideUndo2, LucideCircleX, LucideCircleCheck, LucideCircleQuestionMark],
   templateUrl: "./editor.html",
   styleUrl: "./editor.css",
   providers: [
@@ -43,6 +45,8 @@ export class Editor implements OnInit {
 
   @ViewChild('messageDiv')
   private messageDiv?: ElementRef<HTMLDivElement>;
+
+  private modalService= inject(ModalService);
   
   constructor(private cdr: ChangeDetectorRef, private injector: Injector){
 
@@ -159,5 +163,11 @@ export class Editor implements OnInit {
     return this.states
       .filter(s=>s.name)
       .map(s=>{ return {name: s.name, _id: s._id} });
+  }
+
+  help(){
+    this.modalService.open({
+      component: HelpDialog,
+    });
   }
 }
