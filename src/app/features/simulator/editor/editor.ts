@@ -1,22 +1,19 @@
-import { afterNextRender, ChangeDetectorRef, Component, computed, effect, ElementRef, EventEmitter, inject, Injector, input, OnInit, output, Output, signal, ViewChild } from "@angular/core";
+import { afterNextRender, ChangeDetectorRef, Component, effect, ElementRef, inject, Injector, input, OnInit, output, ViewChild } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import Simulation from "@shared/models/Simulation.model";
-import { TransitionFromRule, TransitionToRule, State } from "@shared/types";
+import { TransitionFromRule, State } from "@shared/types";
 import { FormsModule } from "@angular/forms";
 import { convertToStates, simulationToStateUIarray, StateUI, stateUIarrayToTransitionFromRules } from "./ui-adapter";
-import { JsonPipe } from "@angular/common";
 import { ToStateEditor } from "./to-state-editor/to-state-editor";
 import { ALL_STATES } from "./editor.token";
-import { SimulationService } from "@shared/services/simulation-service";
 import { LucideTrash2, LucidePlus, LucideHammer, LucideSave, LucideUndo2, LucideCircleX, LucideCircleCheck, LucideCircleQuestionMark  } from '@lucide/angular';
 import { ModalService } from "@core/modal/ModalService";
 import { HelpDialog } from "@shared/help-dialog/help-dialog";
 
 @Component({
   selector: "editor",
-  imports: [FormsModule, JsonPipe, ToStateEditor,
-    LucideTrash2, LucidePlus, LucideHammer, LucideSave,
-    LucideUndo2, LucideCircleX, LucideCircleCheck, LucideCircleQuestionMark],
+  imports: [FormsModule, ToStateEditor, LucideTrash2, LucidePlus, LucideHammer,
+    LucideSave, LucideUndo2, LucideCircleX, LucideCircleCheck, LucideCircleQuestionMark],
   templateUrl: "./editor.html",
   styleUrl: "./editor.css",
   providers: [

@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, input, Output } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid'; 
 import { ConditionUI } from "../ui-adapter";
 import { FormsModule } from "@angular/forms";

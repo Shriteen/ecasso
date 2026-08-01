@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
-import Grid from "@core/Grid";
-import Simulation, { SimulationParams } from "@shared/models/Simulation.model";
+import Simulation from "@shared/models/Simulation.model";
 import { getSimulationPreset, SimulationPresetName } from "@shared/models/Simulation.presets";
-import { Cell, TransitionFromRule } from "@shared/types";
 import { v4 as uuidv4 } from 'uuid';
 
 export interface SimulationData{

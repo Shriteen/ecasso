@@ -7,14 +7,13 @@ import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { SimulationService } from "@shared/services/simulation-service";
 import { ModalService } from "@core/modal/ModalService";
 import { SaveDialog } from "./save-dialog/save-dialog";
-import { JsonPipe } from "@angular/common";
 import { RevertDialog } from "./revert-dialog/revert-dialog";
 import { LucideEye, LucideSquareSplitHorizontal, LucidePencil, LucideMoveLeft } from "@lucide/angular";
 
 @Component({
   selector: "simulator",
-  imports: [Editor,Viewer, FormsModule, RouterLink, JsonPipe,
-    LucideEye, LucideSquareSplitHorizontal, LucidePencil, LucideMoveLeft],
+  imports: [Editor,Viewer, FormsModule, RouterLink, LucideEye,
+    LucideSquareSplitHorizontal, LucidePencil, LucideMoveLeft],
   templateUrl: "./simulator.html",
   styleUrl: "./simulator.css",
 })

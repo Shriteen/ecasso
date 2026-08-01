@@ -1,5 +1,5 @@
-import { Component, inject } from "@angular/core";
-import { Router, RouterLink } from "@angular/router";
+import { Component } from "@angular/core";
+import { RouterLink } from "@angular/router";
 import { ModalService } from "@core/modal/ModalService";
 import { LucideHouse, LucidePlus } from "@lucide/angular";
 import { CreateDialog } from "@shared/create-dialog/create-dialog";
@@ -13,7 +13,7 @@ import { CreateDialog } from "@shared/create-dialog/create-dialog";
 })
 export class NotFound {
 
-  constructor(private router: Router, private modalService: ModalService ){}
+  constructor(private modalService: ModalService ){}
   
   newSimulation(){
     this.modalService.open({ component: CreateDialog });

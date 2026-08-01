@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { Router, RouterLink } from "@angular/router";
+import { RouterLink } from "@angular/router";
 import { ModalService } from "@core/modal/ModalService";
 import { SimulationService } from "@shared/services/simulation-service";
 import { DeleteDialog } from "./delete-dialog/delete-dialog";
@@ -20,7 +20,7 @@ export class Home {
 
   modalService= inject(ModalService);
   
-  constructor(private router: Router ){
+  constructor( ){
   }
   
   newSimulation(){

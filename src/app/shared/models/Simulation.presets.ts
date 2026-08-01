@@ -2,7 +2,6 @@ import {
   type State,
   type TransitionFromRule
 } from '@shared/types';
-import RuleEngine from "./RuleEngine.model";
 import { SimulationParams } from './Simulation.model';
 
 export type Preset = {
