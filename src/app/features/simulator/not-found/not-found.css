@@ -11,3 +11,20 @@
     display: flex;
     justify-content: center;
 }
+
+.buttons button{
+    background: #eee;
+    border: none;
+    padding: 1em;
+    margin: 0.5em;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+.buttons button:hover{
+    background: #ccc;
+}
+
+.buttons svg{
+    baseline-shift: center;
+    margin-right: 0.5em;
+}
