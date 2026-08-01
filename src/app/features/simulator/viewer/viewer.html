@@ -9,16 +9,16 @@
   <div class="button-bar">
     <div class="player-controls">
       @if(this.playState=="running"){
-      <button class="pause-btn" (click)="this.pause()">
+      <button class="pause-btn" (click)="this.pause()" title="Stop Simulation">
         <svg lucidePause></svg>
       </button>
       }@else{    
-      <button class="play-btn" (click)="this.play()">
+      <button class="play-btn" (click)="this.play()" title="Resume Simulation">
         <svg lucidePlay></svg>
       </button>
       }
 
-      <select class="speed-control"
+      <select class="speed-control" title="Set Simulation Speed"
               [(ngModel)]="this.interval"
               (ngModelChange)="updateTimer($event)">
         @for(x of this.intervalList ; track $index){
@@ -26,23 +26,23 @@
         }
       </select>  
       
-      <button class="step-btn" (click)="this.step()">
+      <button class="step-btn" (click)="this.step()" title="Advance by 1 step">
         <svg lucideStepForward></svg>
       </button>
     </div>
 
     <div class="board-controls">
-      <button class="reset-btn" (click)="this.reset()">
+      <button class="reset-btn" (click)="this.reset()" title="Reinitialize Simulation">
         <svg lucideShuffle></svg>
       </button>
     </div>
 
     <div class="zoom-controls">  
-      <button class="zoom-in-btn" (click)="this.zoomIn(1.25)">
+      <button class="zoom-in-btn" (click)="this.zoomIn(1.25)" title="Zoom In">
         <svg lucideZoomIn></svg>
       </button>
-      <button class="zoom-reset-btn" (click)="this.zoomReset()">{{(this.zoom*100).toFixed(2)}}%</button>
-      <button class="zoom-out-btn" (click)="this.zoomOut(0.8)">
+      <button class="zoom-reset-btn" (click)="this.zoomReset()" title="Set to 100%">{{(this.zoom*100).toFixed(2)}}%</button>
+      <button class="zoom-out-btn" (click)="this.zoomOut(0.8)" title="Zoom Out">
         <svg lucideZoomOut></svg>
       </button>
     </div>

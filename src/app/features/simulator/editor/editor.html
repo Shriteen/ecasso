@@ -8,7 +8,7 @@
               [style.--color]="state.color" >{{state.name}}</button>
       }
       </div>
-      <button class="add-state-button" (click)="this.addState()">
+      <button class="add-state-button" (click)="this.addState()" title="New State">
         <svg lucidePlus size="30"></svg>
       </button>
     </div>
@@ -24,7 +24,7 @@
           <label class="weight">Initial Population Weight <input type="number" min="0"  [(ngModel)]="state.weight"></label>
         </fieldset>          
       </div>
-      <button class="delete-btn" (click)="this.deleteState(state._id)">
+      <button class="delete-btn" (click)="this.deleteState(state._id)" title="Delete State">
         <svg lucideTrash2 color="#f67373"></svg>
       </button>
     </div>
@@ -34,7 +34,7 @@
                            [availableStates]="this.getAvailableToStates(selectedStateIndex)"
                            (deleted)="this.deleteToStateRule($event)"/>
       }
-      <button class="add-target-state-button" (click)="this.addToStateRule()">
+      <button class="add-target-state-button" (click)="this.addToStateRule()" title="New Transition-To Rule">
         <svg lucidePlus size="30"></svg>
       </button>
     </div>

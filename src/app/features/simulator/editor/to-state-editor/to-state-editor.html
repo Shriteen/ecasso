@@ -1,6 +1,6 @@
 <div class="to-state-container">
   <div class="to-state-details">
-    <button class="fold-button" (click)="this.toggleFold()">
+    <button class="fold-button" [title]="this.folded?'Expand':'Collapse'" (click)="this.toggleFold()">
       @if(this.folded){
         <svg lucideChevronsUpDown></svg>
       }@else{
@@ -13,7 +13,7 @@
       <option [value]="state.name">{{state.name}}</option>
       }
     </select>
-    <button class="to-state-delete-button" (click)="this.delete()">
+    <button class="to-state-delete-button" (click)="this.delete()" title="Delete">
       <svg lucideTrash2 color="#f67373"></svg>
     </button>
   </div>

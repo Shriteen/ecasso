@@ -11,13 +11,13 @@
         }
       </select>
       @if(this.rule().condition=="AND" || this.rule().condition=="OR"){
-      <button class="add-child-condition-button" (click)="this.addChildCondtion()">
+      <button class="add-child-condition-button" (click)="this.addChildCondtion()" title="Add Clause">
         <svg lucideSquarePlus></svg>
       </button>
       }
 
       @if(this.level()>0){
-      <button class="delete-condition-button" (click)="this.deleteCondtion()">
+      <button class="delete-condition-button" (click)="this.deleteCondtion()" title="Delete">
         <svg lucideTrash2></svg>
       </button>
       }
