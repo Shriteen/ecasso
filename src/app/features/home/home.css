@@ -1,0 +1,119 @@
+.action-bar{
+    display: flex;
+    gap: 1em;
+    background: linear-gradient(180deg,rgba(77, 50, 199, 0.82) 0%, rgba(174, 158, 255, 0.69) 100%);
+}
+.action-bar button{
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    margin: 0.5em;
+    font-size: 1rem;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 5px white;
+}
+.action-bar button svg{
+    margin-right: 0.5em;
+}
+
+.action-bar button:hover{
+    box-shadow: 0 0 10px white;    
+}
+
+header{
+    background: linear-gradient(180deg,rgba(12, 20, 83, 1) 25%, rgba(77, 50, 199, 0.82) 100%);
+    padding: 1rem;
+    color: white;
+}
+header h1{
+    margin: 0;
+}
+header p{
+    font-style: italic;
+    margin: 0;    
+}
+
+
+.page{
+    background: linear-gradient(180deg,rgba(174, 158, 255, 0.69) 0%, rgba(255, 255, 255, 1) 100%);
+    padding: 0.5em;
+}
+
+.page>*{
+    margin: auto;
+    padding: 0.5em;
+    background: #ffffff60 ;
+    border-radius: 1em;
+    box-shadow: 0 10px 20px #00000010;
+}
+.empty-list-message{
+    text-align: center;
+    font-size: 1.5em;
+    color: #0c1453;
+}
+
+table{
+    border-spacing: unset;
+}
+td,th{
+    padding: 0px;
+}
+
+table tr.item:hover{
+    background: #ffffff90 ;
+    box-shadow: 0 10px 20px #00000010;    
+}
+
+td:nth-child(2){
+    text-align: center;
+}
+td:last-child{
+    white-space: nowrap;
+}
+
+table a{
+    text-decoration: none;
+    color: #0c1453;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+table button{
+    background: none;
+    border: none;
+    border-radius: 50%;
+    padding: 0.5em;
+}
+table button:hover{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-width:768px){
+    .page>*{
+	padding: 2em;
+    }
+
+    .page{
+	padding: 1em;
+    }
+
+    td,th{
+	padding: 5px 10px;
+    }
+    header{
+	padding: 2rem;
+    }
+    header h1{
+	font-size: 50px;
+	margin: 0;
+    }
+    header p{
+	font-size: 25px;    
+	font-style: italic;
+	margin: 0;
+    }
+
+}

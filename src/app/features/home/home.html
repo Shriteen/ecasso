@@ -3,19 +3,33 @@
     <p>Art imitates life, Life reflects art</p>
 </header>
 <main>
-    <button (click)="newSimulation()">Create</button>
-    <button (click)="importSimulation()">Import from file</button>
-    <table>
-        <tr><th>Name</th> <th>Saved?</th> <th>Actions</th></tr>
-      @for(item of this.list; track item.id){
-        <tr>
-            <td><a [routerLink]="['/simulation', item.id]">{{item.name}}</a></td>
-            <td>{{item.persistedSimulation}}</td>
-            <td>
-                <button (click)="this.delete(item.id)">Delete</button>
-                <button (click)="this.export(item.id)">Export</button>
-            </td>
-        </tr>
-      }
-    </table>
+    <div class="action-bar">
+        <button (click)="newSimulation()"><svg lucidePlus></svg>New Simulation</button>
+        <button (click)="importSimulation()"><svg lucideFileUp></svg>Import from File</button>
+    </div>
+    <div class="page">
+        @if(this.list.length>0){
+        <table>
+            <tr><th>Name</th> <th>Saved?</th> <th>Actions</th></tr>
+            @for(item of this.list; track item.id){
+            <tr class="item">
+                <td><a [routerLink]="['/simulation', item.id]">{{item.name}}</a></td>
+                <td>
+                    @if(item.persistedSimulation){
+                    <svg lucideCheck></svg>
+                    }@else{
+                    <svg lucideX></svg>
+                    }
+                </td>
+                <td>
+                    <button (click)="this.delete(item.id)" title="Delete"><svg lucideTrash2></svg></button>
+                    <button (click)="this.export(item.id)" title="Export to File"><svg lucideFileDown></svg></button>
+                </td>
+            </tr>
+            }
+        </table>
+        }@else{
+        <p class="empty-list-message">Click New Simulation to get started or Import from a file!</p>
+        }
+    </div>
 </main>

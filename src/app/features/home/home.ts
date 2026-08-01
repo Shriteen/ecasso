@@ -5,10 +5,11 @@ import { SimulationService } from "@shared/services/simulation-service";
 import { DeleteDialog } from "./delete-dialog/delete-dialog";
 import { CreateDialog } from "@shared/create-dialog/create-dialog";
 import { ImportDialog } from "./import-dialog/import-dialog";
+import { LucideCheck, LucideFileDown, LucideFileUp, LucidePlus, LucideTrash2, LucideX } from "@lucide/angular";
 
 @Component({
   selector: "app-home",
-  imports: [RouterLink],
+  imports: [RouterLink, LucideCheck, LucideX, LucideTrash2, LucideFileDown, LucideFileUp, LucidePlus],
   templateUrl: "./home.html",
   styleUrl: "./home.css",
 })
