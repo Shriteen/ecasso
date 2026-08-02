@@ -1,5 +1,9 @@
 <div class="viewer">
-  <div class="preview-area" (wheel)="onWheel($event)">
+  <div class="preview-area"
+       (wheel)="onWheel($event)"
+       (touchstart)="onTouchStart($event)"
+       (touchmove)="onTouchMove($event)"
+       (touchend)="onTouchEnd($event)">
     <canvas #canvas
             class="canvas"
             [width]="this.width()"

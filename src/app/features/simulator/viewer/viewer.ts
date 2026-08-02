@@ -31,6 +31,7 @@ export class Viewer implements AfterViewInit {
   ];
 
   zoom= 1;
+  private lastDistance = 0;     // Needed for touch screen pinch handling 
 
   constructor(){
     effect(() => {
@@ -94,4 +95,45 @@ export class Viewer implements AfterViewInit {
         this.zoomOut(0.95);
     }
   }
+
+  onTouchStart(event: TouchEvent) {
+    if (event.touches.length !== 2) return;
+
+    const [t1, t2] = event.touches;
+    this.lastDistance = Math.hypot(
+      t2.clientX - t1.clientX,
+      t2.clientY - t1.clientY
+    );
+  }
+
+  onTouchMove(event: TouchEvent) {
+    if (event.touches.length !== 2) return;
+
+    event.preventDefault();
+
+    const [t1, t2] = event.touches;
+    const distance = Math.hypot(
+      t2.clientX - t1.clientX,
+      t2.clientY - t1.clientY
+    );
+
+    if (this.lastDistance > 0) {
+      const ratio = distance / this.lastDistance;
+
+      if (ratio > 1) {
+        this.zoomIn(ratio);
+      } else if (ratio < 1) {
+        this.zoomOut(ratio);
+      }
+    }
+
+    this.lastDistance = distance;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    if (event.touches.length < 2) {
+      this.lastDistance = 0;
+    }
+  }
+
 }
