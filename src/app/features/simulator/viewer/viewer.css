@@ -32,14 +32,14 @@
     background-color: #e0e0ff;
     border: none;
     border-radius: 5px;
-    padding: 0 0.2em;
+    padding: 0 0.5em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    height: 100%;
 }
 .button-bar button:hover{
     background-color: #a0a0ef80;    
-}
-.button-bar svg{
-    baseline-shift: center;
-    margin: 0 0.25em;
 }
 
 .player-controls{
@@ -54,4 +54,8 @@
 }
 .speed-control:hover{
     background-color: #a0a0ef80;    
+}
+
+.zoom-controls{
+    display: flex;
 }

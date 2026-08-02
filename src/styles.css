@@ -42,7 +42,7 @@ body{
     appearance: none;
     background: #a0a0ef80;
     aspect-ratio: 1;
-    vertical-align: center;
+    vertical-align: middle;
     position: relative;
 }
 .to-state-container input[type="checkbox"]:checked{

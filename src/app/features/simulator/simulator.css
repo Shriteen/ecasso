@@ -46,8 +46,10 @@
     appearance: none;
     margin: 0;
 }
-.view-selector svg{
-    baseline-shift: center;
+.view-selector label{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.025em;
 }
 
 .main-view.viewer Editor{
