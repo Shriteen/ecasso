@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main # Runs whenever you push code to your main branch
+  workflow_dispatch: #manual trigger
 
 # Grants the automatic GITHUB_TOKEN write access to publish to Pages
 permissions:
