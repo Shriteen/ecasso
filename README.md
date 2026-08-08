@@ -13,6 +13,9 @@ ECASSO is a simulator for [Cellular Automata](https://en.wikipedia.org/wiki/Cell
 - Save the created simulations to local storage. It always stay on your device; No account needed!
 - Export to file for sharing and backup 
 
+## Try it out!
+<https://shriteen.github.io/ecasso>
+
 ## Installation
 ``` shell
 npm install
