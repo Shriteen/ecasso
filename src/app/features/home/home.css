@@ -34,6 +34,16 @@ header p{
     font-style: italic;
     margin: 0;    
 }
+header img{
+    width: 50px;
+    height: 50px;
+    background: #ffffff60;
+    border-radius: 1em;
+    box-shadow: 0 10px 20px #00000010;
+    margin: 0.5em;
+    padding: 0.25em;
+    float: right;
+}
 
 
 .page{
@@ -115,5 +125,12 @@ table button:hover{
 	font-style: italic;
 	margin: 0;
     }
-
+    header img{
+	width: 100px;
+	height: 100px;
+	float: left;
+	padding: 0.5em;
+    }
+    
 }
+

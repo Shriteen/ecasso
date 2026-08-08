@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 448" width="100%" height="100%">
+  <!-- Dark Background -->
+  <rect width="448" height="448" fill="#0D0E15" />
+
+  <!-- 7x7 Grid Lines -->
+  <path d="M0 64H448M0 128H448M0 192H448M0 256H448M0 320H448M0 384H448
+           M64 0V448M128 0V448M192 0V448M256 0V448M320 0V448M384 0V448" 
+        stroke="#1A1C29" stroke-width="8" />
+
+  <!-- Centered Glider (Vivid Cyan) -->
+  <g fill="#00F0FF">
+    <!-- Top Row -->
+    <rect x="192" y="128" width="64" height="64" />
+    <rect x="256" y="128" width="64" height="64" />
+    
+    <!-- Middle Row -->
+    <rect x="128" y="192" width="64" height="64" />
+    <rect x="256" y="192" width="64" height="64" />
+    
+    <!-- Bottom Row -->
+    <rect x="256" y="256" width="64" height="64" />
+  </g>
+</svg>
